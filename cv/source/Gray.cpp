@@ -1,29 +1,28 @@
+#ifndef __GRAY__CPP
+#define __GRAY__CPP
+
 #include <initializer_list>
 #include <vector>
-#include "Interface.h"
+#include "BaseClass.h"
 
-using cv::Mat;
-using cv::cvtColor;
-using std::initializer_list;
-using std::vector;
+using namespace cv;
+using namespace std;
 
-class Gray : public Interface {
+class Gray : public BaseClass {
 public:
-    Gray() {}
+    Gray() : BaseClass("Gray") {}
 
-    // 存放所有图片到 raw_image 里面
-    Gray(initializer_list<vector<Mat>> v_images) {
-        for (vector<Mat>& images : v_images) {      // 遍历每一张图片集
-            for (Mat& image : images) {             // 遍历图片集中的每张图片
-                raw_images.push_back(image);
-            }
-        }
-    }
+    void init_params(vector<void*> params) override {}
 
     vector<Mat>& execute() override {
-        for (Mat& image : raw_images) {
-            push_back(ToGray(image));
+        vector<vector<Mat>>& raw_images = get_raw_images();
+        for (vector<Mat>& vec_images : raw_images) {
+            for (Mat& image : vec_images) {
+                images.push_back(ToGray(image));
+            }
         }
+
+        return images;
     }
 
     // 灰度处理
@@ -33,6 +32,8 @@ public:
     }
 
 private:
-    vector<Mat> raw_images;
+    vector<Mat> images;
 };
+
+#endif
 
