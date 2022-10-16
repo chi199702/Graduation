@@ -23,26 +23,6 @@ from PIL import Image, ImageDraw, ImageFont
 rootDir = "../photos"
 saved_path = r"../p_results"
 
-#rootDir = "/home/user/cwm/photos/three_select_photo"
-#saved_path = r"/home/user/cwm/photos/three_select_result"
-
-#rootDir = "/home/user/cwm/photos/one_trim_photo"
-#saved_path = r"/home/user/cwm/photos/one_trim_result"
-
-#rootDir = "/home/user/cwm/photos/two_trim_photo"
-#saved_path = r"/home/user/cwm/photos/two_trim_result"
-
-#rootDir = "/home/user/cwm/photos/three_trim_photo"
-#saved_path = r"/home/user/cwm/photos/three_trim_result"
-
-#rootDir = "/home/user/cwm/photos/four_trim_photo"
-#saved_path = r"/home/user/cwm/photos/four_trim_result"
-
-#rootDir = "/home/user/cwm/photos/five_trim_photo"
-#saved_path = r"/home/user/cwm/photos/five_trim_result"
-
-#saved_path = r"/home/user/cwm/video/res"
-
 parser = argparse.ArgumentParser()
 parser.add_argument("--GPU_MODE",type=str,default=str(0),help="input -1,0,1,2,3 etc")
 parser.add_argument("--port",type=int,default=5000,help="input port")

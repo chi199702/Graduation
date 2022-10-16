@@ -8,6 +8,10 @@ using namespace std;
 
 typedef void* (*NewInstancePt)();   // 函数指针
 
+/**
+ * 工厂类
+ * 通过指定类名来获取实例
+ * */
 class ObjectFactory {
 public:
 
@@ -17,7 +21,7 @@ public:
      * 2. 创建成功返回 void*，返回后必须转为基类指针
      * */
     static void* CreateObject(const string& class_name) {
-        auto ite = dynamic_creator.find(class_name);
+        const auto ite = dynamic_creator.find(class_name);
         if (ite == dynamic_creator.end()) {
             return nullptr;
         }else {
@@ -29,8 +33,8 @@ public:
     /**
      * 注册创造实例的函数指针到 dynamic_creator 中
      * */
-    static void RegisterClass(const string& class_name, NewInstancePt instance_pt) {
-        dynamic_creator[class_name] = instance_pt;
+    static void RegisterClass(const string& class_name, NewInstancePt func_pt) {
+        dynamic_creator[class_name] = func_pt;
     }
 
 private:
@@ -39,9 +43,13 @@ private:
 
 map<string, NewInstancePt> ObjectFactory::dynamic_creator;
 
+/**
+ * 用于向 dynamic_creator 中注册创建实例的函数指针
+ * */
 class Register {
-    Register(const string& class_name, NewInstancePt instance_pt) {
-        ObjectFactory::RegisterClass(class_name, instance_pt);
+public:
+    Register(const string& class_name, NewInstancePt func_pt) {
+        ObjectFactory::RegisterClass(class_name, func_pt);
     }
 };
 
@@ -57,9 +65,9 @@ public:\
     }\
 \
 private:\
-    static Register register;\
-}\
+    static Register reg;\
+};\
 \
-Register class_name##Register::register(#class_name, class_name##Register::NewInstance);
+Register class_name##Register::reg(#class_name, class_name##Register::NewInstance);
 
 #endif

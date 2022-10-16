@@ -1,3 +1,7 @@
+/**
+ * 灰度处理
+ * */
+
 #ifndef __GRAY__CPP
 #define __GRAY__CPP
 
@@ -12,17 +16,18 @@ class Gray : public BaseClass {
 public:
     Gray() : BaseClass("Gray") {}
 
-    void init_params(vector<void*> params) override {}
+    void InitParams(vector<void*> params) override {}
 
-    vector<Mat>& execute() override {
+    vector<vector<Mat>>& Execute() override {
         vector<vector<Mat>>& raw_images = get_raw_images();
+        vector<Mat>& result_image = get_result_image();
         for (vector<Mat>& vec_images : raw_images) {
             for (Mat& image : vec_images) {
-                images.push_back(ToGray(image));
+                result_image.push_back(ToGray(image));
             }
         }
-
-        return images;
+        PushBack(result_image);
+        return get_result_image_s();
     }
 
     // 灰度处理
@@ -31,9 +36,10 @@ public:
         return image;
     }
 
-private:
-    vector<Mat> images;
+    
 };
+
+REGISTER_CLASS(Gray);
 
 #endif
 

@@ -1,3 +1,7 @@
+/**
+ * 读取图片
+ * */
+
 #ifndef __READER__CPP
 #define __READER__CPP
 
@@ -11,18 +15,20 @@ class Reader : public BaseClass {
 public:
     Reader() : BaseClass("Reader") {}
 
-    void init_params(vector<void*> params) override {
-        string* path_ptr = reinterpret_cast<string*>(params[0]);
-        path = *path_ptr;
+    void InitParams(vector<void*> params) override {
+        string* path_ptr_pt = reinterpret_cast<string*>(params[0]);
+        path = *path_ptr_pt;
     }
 
     // 将 path 下的所有图片加入到 images 中
-    vector<Mat>& execute() override {
+    vector<vector<Mat>>& Execute() override {
 
     }
 
 private:
     string path;
 };
+
+REGISTER_CLASS(Reader);
 
 #endif

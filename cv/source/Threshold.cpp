@@ -1,18 +1,18 @@
 /**
- * 该类的功能
+ * 阈值处理
  * */
 
-#ifndef __XXX__CPP
-#define __XXX__CPP
+#ifndef __THRESHOLD__CPP
+#define __THRESHOLD__CPP
 
 #include "BaseClass.h"
 
 using namespace cv;
 using namespace std;
 
-class class_name : public BaseClass {
+class Threshold : public BaseClass {
 public:
-    class_name() : BaseClass("class_name") {}
+    Threshold() : BaseClass("Threshold") {}
 
     void InitParams(vector<void*> params) override {
         // 按顺序给数据成员赋值
@@ -23,7 +23,7 @@ public:
         vector<Mat>& result_image = get_result_image();
         for (vector<Mat>& vec_images : raw_images) {
             for (Mat& image : vec_images) {
-                
+                result_image.push_back(_Threshold(image));
             }
         }
 
@@ -32,13 +32,16 @@ public:
     }
 
     /**
-     * 在 Execute() 内部调用的其他函数
+     * 阈值处理
      * */
-
-private:
-    // 数据成员
+    Mat _Threshold(Mat& image) {
+        Mat result;
+        threshold(image, result, 0, 255, THRESH_BINARY | THRESH_OTSU);
+        
+        return result;
+    }
 };
 
-REGISTER_CLASS(class_name);
+REGISTER_CLASS(Threshold);
 
 #endif
