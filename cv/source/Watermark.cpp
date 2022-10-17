@@ -40,7 +40,7 @@ public:
     }
 
     /**
-     * 将照片 dst 调整成和 src 相同的尺寸
+     * @brief 将照片 dst 调整成和 src 相同的尺寸
      * */
     Mat ResizeToSrc(Mat& src, Mat& dst) {
         Mat result;
@@ -50,7 +50,7 @@ public:
     }
 
     /**
-     * 两张图片叠加
+     * @brief 两张图片叠加
      * */
     Mat AddTwoMat(Mat& image1, Mat& image2) {
         Mat result;

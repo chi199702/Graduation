@@ -16,7 +16,7 @@ class ObjectFactory {
 public:
 
     /**
-     * 根据类名创建类实例
+     * @brief 根据类名创建类实例
      * 1. 创建失败返回 Nullptr
      * 2. 创建成功返回 void*，返回后必须转为基类指针
      * */
@@ -31,7 +31,9 @@ public:
     }
 
     /**
-     * 注册创造实例的函数指针到 dynamic_creator 中
+     * @brief 注册创造实例的函数指针到 dynamic_creator 中
+     * @param class_name 类名
+     * @param func_pt    能创造出实例的函数指针
      * */
     static void RegisterClass(const string& class_name, NewInstancePt func_pt) {
         dynamic_creator[class_name] = func_pt;

@@ -30,7 +30,9 @@ public:
         return get_result_image_s();
     }
 
-    // 灰度处理
+    /**
+     * @brief 灰度处理
+     * */
     Mat& ToGray(Mat& image) {
         cvtColor(image, image, cv::COLOR_BGR2GRAY);
         return image;

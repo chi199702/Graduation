@@ -20,13 +20,15 @@ from PIL import Image, ImageDraw, ImageFont
 #修改为你自己的路径
 ################
 
-rootDir = "../photos"
-saved_path = r"../p_results"
+# rootDir = '/home/cwm/Graduation/photos'
+# saved_path = r'/home/cwm/Graduation/p_results'
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--GPU_MODE",type=str,default=str(0),help="input -1,0,1,2,3 etc")
 parser.add_argument("--port",type=int,default=5000,help="input port")
 parser.add_argument("--batchSize",type=int,default=1,help="input batchSize")
+parser.add_argument("--src",type=str,default="/home/cwm/Graduation/photos")
+parser.add_argument("--dst",type=str,default="/home/cwm/Graduation/p_results")
 opt = parser.parse_args()
 
 
@@ -76,6 +78,8 @@ def HyperLPR_plate_recognition(Input_BGR):
 #     print("识别率:","{:2.2f}".format((res/fps) * 100),"%")
 
 if __name__ == '__main__':
+    rootDir = opt.src;
+    saved_path = opt.dst;
     img_files = os.listdir(rootDir)
     count = 0
     num = 0

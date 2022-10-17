@@ -32,7 +32,7 @@ public:
     }
 
     /**
-     * 阈值处理
+     * @brief 阈值处理
      * */
     Mat _Threshold(Mat& image) {
         Mat result;
