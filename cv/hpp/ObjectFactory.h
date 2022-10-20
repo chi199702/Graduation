@@ -20,39 +20,25 @@ public:
      * 1. 创建失败返回 Nullptr
      * 2. 创建成功返回 void*，返回后必须转为基类指针
      * */
-    static void* CreateObject(const string& class_name) {
-        const auto ite = dynamic_creator.find(class_name);
-        if (ite == dynamic_creator.end()) {
-            return nullptr;
-        }else {
-            NewInstancePt instance_pt = ite -> second;
-            return instance_pt();
-        }
-    }
+    static void* CreateObject(const string& class_name);
 
     /**
      * @brief 注册创造实例的函数指针到 dynamic_creator 中
      * @param class_name 类名
      * @param func_pt    能创造出实例的函数指针
      * */
-    static void RegisterClass(const string& class_name, NewInstancePt func_pt) {
-        dynamic_creator[class_name] = func_pt;
-    }
+    static void RegisterClass(const string& class_name, NewInstancePt func_pt);
 
 private:
     static map<string, NewInstancePt> dynamic_creator;
 };
-
-map<string, NewInstancePt> ObjectFactory::dynamic_creator;
 
 /**
  * 用于向 dynamic_creator 中注册创建实例的函数指针
  * */
 class Register {
 public:
-    Register(const string& class_name, NewInstancePt func_pt) {
-        ObjectFactory::RegisterClass(class_name, func_pt);
-    }
+    Register(const string& class_name, NewInstancePt func_pt);
 };
 
 /**

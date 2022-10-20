@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Processor.h"
 
 using namespace cv;
@@ -53,5 +54,7 @@ int main() {
       ]
     )";
 
+    Processor process(cwm_json);
+    cout << "Hello, World" << endl;
     return 0;
 }

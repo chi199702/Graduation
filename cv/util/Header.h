@@ -1,10 +1,6 @@
-#include "ObjectFactory.h"
+#ifndef __HEADER_H
+#define __HEADER_H
+
 #include "BaseClass.h"
-#include "Cut.h"
-#include "Gray.h"
-#include "LPR.h"
-#include "Reader.h"
-#include "Resize.h"
-#include "Threshold.h"
-#include "Watermark.h"
-#include "Writer.h"
+
+#endif
