@@ -11,13 +11,13 @@ int main() {
       [
         {
           "name": "Reader",
-          "parameter_list": ["/home/cwm/Graduation/cv/photos"],
+          "parameter_list": ["/home/cwm/Graduation/cv/photos_raw"],
           "sequence": 1,
           "father": []
         },
         {
           "name": "Resize",
-          "parameter_list": [8],
+          "parameter_list": [80.0],
           "sequence": 2,
           "father": [1]
         },
@@ -47,7 +47,7 @@ int main() {
         },
         {
           "name": "Writer",
-          "parameter_list": ["/home/cwm/Graduation/cv/photo_results"],
+          "parameter_list": ["/home/cwm/Graduation/cv/photos_writer"],
           "sequence": 7,
           "father": [6]
         }
@@ -55,6 +55,7 @@ int main() {
     )";
 
     Processor process(cwm_json);
+    process.process();
     cout << "Hello, World" << endl;
     return 0;
 }

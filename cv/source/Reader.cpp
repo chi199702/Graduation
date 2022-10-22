@@ -12,7 +12,8 @@ vector<vector<Mat>>& Reader::Execute() {
     ReaderImages reader;
     vector<Mat>& images = get_result_image();
     images = reader.read(path);
+    cout << "Reader 读取图片数量：" << images.size() << endl;
     PushBack(images);
-
+    cout << "Reader::Execute() has execute success~" << endl;
     return get_result_image_s();
 }

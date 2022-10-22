@@ -10,7 +10,9 @@ vector<vector<Mat>>& Gray::Execute() {
             result_image.push_back(ToGray(image));
         }
     }
+    cout << "Gray 处理图片数量：" << result_image.size() << endl;
     PushBack(result_image);
+    cout << "Gray::Execute() has execute success~" << endl;
     return get_result_image_s();
 }
 

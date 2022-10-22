@@ -12,7 +12,8 @@ vector<vector<Mat>>& Writer::Execute() {
     for (vector<Mat>& vec_images : raw_images) {
         writer.WriterMat(vec_images, dst_path);
     }
-
+    cout << "Writer 写出的图片数量" << raw_images.size() << endl;
     PushBack(result_image);
+    cout << "Writer::Execute() has execute success~" << endl;
     return get_result_image_s();
 }

@@ -21,10 +21,10 @@ public:
     /**
      * 缩放
      * */
-    Mat& Scale(Mat& image);
+    Mat Scale(Mat& image);
 
 private:
-    unsigned int percent_of_scaling;
+    double percent_of_scaling;
 };
 
 REGISTER_CLASS(Resize);

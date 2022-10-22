@@ -20,11 +20,15 @@ vector<vector<Mat>>& Cut::Execute() {
             result_image.push_back(Trim(image));
         }
     }
+    cout << "Cut 处理图片数量：" << result_image.size() << endl;
     PushBack(result_image);
+    cout << "Cut::Execute() has execute success~" << endl;
     return get_result_image_s();
 }
 
-Mat& Cut::Trim(Mat& image) {
-    image = image(Range(height_up, height_down), Range(width_left, width_right));
-    return image;
+Mat Cut::Trim(Mat& image) {
+    const int MAX_WIDTH = image.size().width;
+    const int MAX_HEIGHT = image.size().height;
+    Mat result = image(Range(0, MAX_HEIGHT), Range(0, MAX_WIDTH));
+    return result;
 }

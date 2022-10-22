@@ -12,6 +12,7 @@ vector<vector<Mat>>& Threshold::Execute() {
     }
 
     PushBack(result_image);
+    cout << "Threshold::Execute() has execute success~" << endl;
     return get_result_image_s();
 }
 

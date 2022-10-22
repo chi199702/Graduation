@@ -1,5 +1,10 @@
 #include "Processor.h"
 
+Processor::Processor() {}
+
+Processor::Processor(const string& _str) : str(_str), json(Json::parse(str, json_error)) {}
+
+
 void Processor::Init() {
     parse_father();
     parse_params();
@@ -30,12 +35,15 @@ void Processor::parse_params() {
             switch (param.type()) {
                 case Json::Type::NUMBER:
                     value = new double(param.number_value());
+//                    cout << *reinterpret_cast<double*>(value) << endl;
                     break;
                 case Json::Type::STRING:
                     value = new string(param.string_value());
+//                    cout << *reinterpret_cast<string*>(value) << endl;
                     break;
                 case Json::Type::BOOL:
                     value = new bool(param.bool_value());
+//                    cout << *reinterpret_cast<bool*>(value) << endl;
                     break;
             }
             sequence_params[sequence].push_back(value);
@@ -44,6 +52,9 @@ void Processor::parse_params() {
 }
 
 void Processor::process() {
+    Init();
+    // 打印 sequence_name、sequence_father、sequence_params
+//    print();
     const int calculate_count = json.array_items().size();  // 算子总数
     int completed = 0;   // 已执行完成的算子个数
 
@@ -90,23 +101,33 @@ bool Processor::ExecuteModule(int sequence) {
     if (!JudgeExecution(sequence)) {
         return false;
     }
-
-    string& name = sequence_name[sequence];
-    BaseClass* instance = reinterpret_cast<BaseClass*>(GetInstance(name));
-    instance -> InitParams(sequence_params[sequence]);  // 为算子设置参数
-    // 获取父节点的结果
-    vector<vector<Mat>> fathers_result;
-    vector<int> fathers = sequence_father[sequence];
-    for (int father : fathers) {
-        for (vector<Mat> images : results[father]) {
-            fathers_result.push_back(images);
+    try {
+        string& name = sequence_name[sequence];
+        BaseClass* instance = reinterpret_cast<BaseClass*>(GetInstance(name));
+        instance -> InitParams(sequence_params[sequence]);  // 为算子设置参数
+        if (instance == nullptr) {
+            throw runtime_error("exception occur in Processor.cpp::106, BaseClass* instance = reinterpret_cast<BaseClass*>(GetInstance(name))");
         }
+        // 获取父节点的结果
+        vector<vector<Mat>> fathers_result;
+        vector<int> fathers = sequence_father[sequence];
+        for (int father : fathers) {
+            for (vector<Mat>& images : results[father]) {
+                fathers_result.push_back(images);
+            }
+        }
+        instance -> set_raw_images(fathers_result); // 传递父节点的执行结果给算子
+        // 执行算子
+        vector<vector<Mat>>& result_image_s = instance -> Execute();
+        // 存放算子执行结果
+        results[sequence] = result_image_s;
+    }catch (const runtime_error& error) {
+        cout << error.what() << endl;
+        exit(-1);
+    }catch (const exception& error) {
+        cout << error.what() << endl;
+        exit(-1);
     }
-    instance -> set_raw_images(fathers_result); // 传递父节点的执行结果给算子
-    // 执行算子
-    vector<vector<Mat>>& result_image_s = instance -> Execute();
-    // 存放算子执行结果
-    results[sequence] = result_image_s;
 
     return true;
 }
@@ -128,6 +149,21 @@ bool Processor::JudgeExecution(int sequence) {
     }
 
     return true;
+}
+
+void Processor::print() {
+    for (auto p : sequence_name) {
+        cout << p.first << " " << p.second << endl;
+    }
+
+    for (auto p : sequence_father) {
+        cout << p.first << " ";
+        cout << "[ ";
+        for (int father : p.second) {
+            cout << father << " ";
+        }
+        cout << " " << "]" << endl;
+    }
 }
 
 Processor::~Processor() {

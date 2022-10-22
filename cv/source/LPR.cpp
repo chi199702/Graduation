@@ -5,13 +5,14 @@ void LPR::InitParams(vector<void*> params) {}
 vector<vector<Mat>>& LPR::Execute() {
     // 1、将 Mat 写出到 src_path
     vector<vector<Mat>>& _raw_images = get_raw_images();
+    cout << "LPR 写出到 " << src_path << " 的图片数量：" << _raw_images[0].size() << endl;
     for (vector<Mat>& images : _raw_images) {
         WriteMat(images);
     }
 
     // 2、开启一个子线程来执行 test.py
-    string cmd = "cd /home/cwm/Graduation/pythonmicroserver-update_weights && python test.py";
-    string first_cmd = "cd /home/cwm/Graduation/pythonmicroserver-update_weights";
+    // string cmd = "cd /home/cwm/Graduation/cv/pythonmicroserver-update_weights && python test.py";
+    string first_cmd = "cd /home/cwm/Graduation/cv/pythonmicroserver-update_weights";
     string second_cmd = "python test.py --src " + src_path + " --dst " + dst_path;
     string complete_cmd = first_cmd + " && " + second_cmd;
     ExecuteShell(complete_cmd);
@@ -20,7 +21,10 @@ vector<vector<Mat>>& LPR::Execute() {
     ReaderImages reader;
     vector<Mat>& images = get_result_image();
     images = reader.read(dst_path);
+    cout << "LPR 处理图片数量：" << images.size() << endl;
     PushBack(images);
+    cout << "LPR::Execute() has execute success~" << endl;
+    return get_result_image_s();
 }
 
 void LPR::WriteMat(vector<Mat>& images) {
@@ -30,7 +34,11 @@ void LPR::WriteMat(vector<Mat>& images) {
 
 void LPR::ExecuteShell(string& cmd) {
     FILE* fp = NULL;
-    fp = popen(cmd.c_str(), "r");
+    fp = popen(cmd.c_str(), "w");
+    if (!fp) {
+        cout << "LPR execute shell cmd failed~" << endl;
+        exit(EXIT_FAILURE);
+    }
     pclose(fp);
 }
 

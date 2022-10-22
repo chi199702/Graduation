@@ -20,8 +20,9 @@ vector<vector<Mat>>& Watermark::Execute() {
             result_image.push_back(result);
         }
     }
-
+    cout << "Watermark 处理图片数量：" << result_image.size() << endl;
     PushBack(result_image);
+    cout << "Watermark::Execute() has execute success~" << endl;
     return get_result_image_s();
 }
 
@@ -30,7 +31,9 @@ vector<vector<Mat>>& Watermark::Execute() {
  * */
 Mat Watermark::ResizeToSrc(Mat& src, Mat& dst) {
     Mat result;
-    resize(dst, result, src.size());
+    double new_width  = static_cast<double>(src.size().width);
+    double new_height = static_cast<double>(src.size().height);
+    resize(dst, result, Size(new_width, new_height));
 
     return result;
 }
@@ -40,7 +43,13 @@ Mat Watermark::ResizeToSrc(Mat& src, Mat& dst) {
  * */
 Mat Watermark::AddTwoMat(Mat& image1, Mat& image2) {
     Mat result;
+    if (image1.channels() == 1 || image2.channels() == 1) {
+        if (image1.channels() != 1 && image2.channels() == 1) {
+            cvtColor(image1, image1, cv::COLOR_BGR2GRAY);
+        }else if (image1.channels() == 1 && image2.channels() != 1) {
+            cvtColor(image2, image2, cv::COLOR_BGR2GRAY);
+        }
+    }
     addWeighted(image1, 0.9, image2, 0.1, 0, result);
-
     return result;
 }

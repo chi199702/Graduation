@@ -19,7 +19,7 @@ public:
 
     vector<vector<Mat>>& Execute() override;
 
-    Mat& Trim(Mat& image);
+    Mat Trim(Mat& image);
 
 private:
     unsigned int height_up;

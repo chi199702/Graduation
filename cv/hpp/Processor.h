@@ -19,9 +19,9 @@ using namespace json11;
 
 class Processor {
 public:
-    Processor() {}
+    Processor();
 
-    Processor(const string& _str) : str(_str), json(Json::parse(str, json_error)) {}
+    Processor(const string& _str);
 
     /**
      * @brief
@@ -67,7 +67,10 @@ public:
      * @brief 释放参数列表 sequence_params
      * 由于 void* 指向的都是简单数据类型, 所以可以直接使用 delete void*
      * */
+
+    void print();
     ~Processor();
+
 private:
     string str;                                         // 描述 DAG 图的 json
     string json_error;                                  // 描述解析出错的原因

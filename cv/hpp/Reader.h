@@ -13,7 +13,7 @@ using namespace std;
 
 class Reader : public BaseClass {
 public:
-    Reader() : BaseClass("Reader"), path("/home/cwm/Graduation/cv/photos") {}
+    Reader() : BaseClass("Reader"), path("/home/cwm/Graduation/cv/photos_raw") {}
 
     void InitParams(vector<void*> params) override;
 
