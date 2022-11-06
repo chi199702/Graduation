@@ -4,12 +4,13 @@
 #include <string>
 #include <vector>
 #include <structs.h>
+#include <TArm.h>
 #include "ObjectFactoryTArm.h"
 
 using namespace std;
 
 enum Type {
-    SPARSETENSOR, DENSETENSOR, SPARSEMATRIX, DENSEMATRIX, INDEXVECTOR, VALUEVECTOR
+    NONE, SPARSETENSOR, DENSETENSOR, SPARSEMATRIX, DENSEMATRIX, INDEXVECTOR, VALUEVECTOR
 };
 
 class BaseClassTArm {
@@ -37,12 +38,12 @@ public:
     void set_raw_index_vector(vector<void*> vec);
     void set_raw_value_vector(vector<void*> vec);
 
-    vector<void*> get_raw_sparse_tensor();
-    vector<void*> get_raw_dense_tensor();
-    vector<void*> get_raw_sparse_matrix();
-    vector<void*> get_raw_dense_matrix();
-    vector<void*> get_raw_index_vector();
-    vector<void*> get_raw_value_vector();
+    vector<void*>& get_raw_sparse_tensor();
+    vector<void*>& get_raw_dense_tensor();
+    vector<void*>& get_raw_sparse_matrix();
+    vector<void*>& get_raw_dense_matrix();
+    vector<void*>& get_raw_index_vector();
+    vector<void*>& get_raw_value_vector();
 
     void set_done_sparse_tensor(void*);
     void set_done_dense_tensor(void*);

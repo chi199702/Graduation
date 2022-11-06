@@ -24,22 +24,22 @@ void BaseClassTArm::set_raw_value_vector(vector<void*> vec) {
     raw_value_vector = vec;
 }
 
-vector<void*> BaseClassTArm::get_raw_sparse_tensor() {
+vector<void*>& BaseClassTArm::get_raw_sparse_tensor() {
     return raw_sparse_tensor;
 }
-vector<void*> BaseClassTArm::get_raw_dense_tensor() {
+vector<void*>& BaseClassTArm::get_raw_dense_tensor() {
     return raw_dense_tensor;
 }
-vector<void*> BaseClassTArm::get_raw_sparse_matrix() {
+vector<void*>& BaseClassTArm::get_raw_sparse_matrix() {
     return raw_sparse_matrix;
 }
-vector<void*> BaseClassTArm::get_raw_dense_matrix() {
+vector<void*>& BaseClassTArm::get_raw_dense_matrix() {
     return raw_dense_matrix;
 }
-vector<void*> BaseClassTArm::get_raw_index_vector() {
+vector<void*>& BaseClassTArm::get_raw_index_vector() {
     return raw_index_vector;
 }
-vector<void*> BaseClassTArm::get_raw_value_vector() {
+vector<void*>& BaseClassTArm::get_raw_value_vector() {
     return raw_value_vector;
 }
 
