@@ -7,7 +7,7 @@
 using namespace std;
 
 /**
- * @brief 覆盖原空间的稠密哈达玛积
+ * @brief 覆盖原空间的稠密矩阵哈达玛积
  * */
 class HadamardDenseMatrix : public BaseClassTArm {
 public:

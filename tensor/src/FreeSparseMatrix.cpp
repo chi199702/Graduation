@@ -5,6 +5,7 @@ void* FreeSparseMatrix::Execute() {
     tnsSparseMatrix* matrix = reinterpret_cast<tnsSparseMatrix*>(sparse_matrix[0]);
 
     tnsFreeSparseMatrix(matrix);
+    return nullptr;
 }
 
 void FreeSparseMatrix::InitParams(vector<void*> params) {}

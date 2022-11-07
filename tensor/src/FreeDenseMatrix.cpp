@@ -5,6 +5,7 @@ void* FreeDenseMatrix::Execute() {
     tnsDenseMatrix* matrix = reinterpret_cast<tnsDenseMatrix*>(dense_matrix[0]);
 
     tnsFreeDenseMatrix(matrix);
+    return nullptr;
 }
 
 void FreeDenseMatrix::InitParams(vector<void*> params) {}

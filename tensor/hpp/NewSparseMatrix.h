@@ -1,5 +1,5 @@
-#ifndef __NewSparseMatrix__H
-#define __NewSparseMatrix__H
+#ifndef __NEWSPARSEMATRIX__H
+#define __NEWSPARSEMATRIX__H
 
 #include <vector>
 #include "BaseClassTArm.h"
