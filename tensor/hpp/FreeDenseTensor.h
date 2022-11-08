@@ -19,4 +19,4 @@ public:
 };
 
 REGISTERTARM_CLASS(FreeDenseTensor);
-#endif;
+#endif

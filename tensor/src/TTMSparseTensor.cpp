@@ -7,7 +7,7 @@ void* TTMSparseTensor::Execute() {
     tnsSparseTensor* tensorx = reinterpret_cast<tnsSparseTensor*>(raw_sparse_tensor[0]);
     tnsDenseMatrix* denmat = reinterpret_cast<tnsDenseMatrix*>(raw_dense_matrix[0]);
 
-    tnsSparseTensor tensory;
+    
     tnsNewSparseTensor(&tensory, tensorx -> ndims, tensorx -> nmodes, tensorx -> nnz);
     tensory.ndims[copt_mode] = denmat -> ncols;
     tnsTTMSpatsr(&tensory, tensorx, denmat, copt_mode);

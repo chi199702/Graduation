@@ -16,6 +16,9 @@ public:
     virtual void InitParams(vector<void*> params) override;
     virtual Type get_type() override;
     ~HadamardDenseSparseMatrix();
+
+private:
+    tnsSparseMatrix mtxCC;
 };
 
 REGISTERTARM_CLASS(HadamardDenseSparseMatrix);

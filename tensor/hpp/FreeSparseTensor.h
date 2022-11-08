@@ -19,4 +19,4 @@ public:
 };
 
 REGISTERTARM_CLASS(FreeSparseTensor);
-#endif;
+#endif

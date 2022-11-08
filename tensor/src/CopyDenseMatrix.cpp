@@ -4,7 +4,6 @@ void* CopyDenseMatrix::Execute() {
     vector<void*> raw_dense_matrix = get_raw_dense_matrix();
     tnsDenseMatrix* matrix = reinterpret_cast<tnsDenseMatrix*>(raw_dense_matrix[0]);
 
-    tnsDenseMatrix mtx_B;
     tnsNewDenseMatrix(&mtx_B, matrix -> nrows, matrix -> ncols);
     tnsCopyDenseMatrix(&mtx_B, matrix);
 

@@ -5,7 +5,6 @@ void* KroneckerDenseMatrix::Execute() {
     tnsDenseMatrix* martix1 = reinterpret_cast<tnsDenseMatrix*>(raw_dense_matrix[0]);
     tnsDenseMatrix* martix2 = reinterpret_cast<tnsDenseMatrix*>(raw_dense_matrix[1]);
 
-    tnsDenseMatrix mtxc_dense;
     tnsNewDenseMatrix(&mtxc_dense, martix1 -> nrows * martix2 -> nrows, martix1 -> ncols * martix2 -> ncols);
     tnsKroneckerDenmtx(&mtxc_dense, martix1, martix2);
 

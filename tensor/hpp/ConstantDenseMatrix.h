@@ -19,6 +19,7 @@ public:
 
 private:
     float val;
+    tnsDenseMatrix matrix;
 };
 
 REGISTERTARM_CLASS(ConstantDenseMatrix);

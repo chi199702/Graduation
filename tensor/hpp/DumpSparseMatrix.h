@@ -20,6 +20,7 @@ public:
 
 private:
     string path;
+    tnsSparseMatrix* matrix;
 };
 
 REGISTERTARM_CLASS(DumpSparseMatrix);

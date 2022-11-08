@@ -20,6 +20,7 @@ public:
 private:
     uint32_t nrows;
     uint32_t ncols;
+    tnsDenseMatrix matrix;
 };
 
 REGISTERTARM_CLASS(NewDenseMatrix);

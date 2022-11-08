@@ -2,6 +2,14 @@
 
 BaseClassTArm::BaseClassTArm(const string& _class_name = "Interface", const Type& _type = Type::SPARSETENSOR) : class_name(_class_name), type(_type) {}
 
+void* BaseClassTArm::Execute() {}
+
+void BaseClassTArm::InitParams(vector<void*> params) {}
+
+Type BaseClassTArm::get_type() {
+    return type;
+}
+
 BaseClassTArm::~BaseClassTArm() {}
 
 // set and get
@@ -79,8 +87,4 @@ void* BaseClassTArm::get_done_index_vector() {
 }
 void* BaseClassTArm::get_done_value_vector() {
     return done_value_vector;
-}
-
-Type BaseClassTArm::get_type() {
-    return type;
 }

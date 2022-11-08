@@ -118,24 +118,24 @@ bool ProcessorTArm::ExecuteModule(int sequence) {
             void* void_result = results[father];
             // 判断父节点返回结果的类型，设置子节点对应的类型
             switch (father_type) {
-                case Type::SPARSEMATRIX:
-                    tnsSparseMatrix* father_result = reinterpret_cast<tnsSparseMatrix*>(void_result);
-                    father_raw_sparse_matrix.push_back(father_result);
-                    break;
-                case Type::DENSEMATRIX:
-                    tnsDenseMatrix* father_result = reinterpret_cast<tnsDenseMatrix*>(void_result);
-                    father_raw_dense_matrix.push_back(father_result);
-                    break;
-                case Type::SPARSETENSOR:
-                    tnsSparseTensor* father_result = reinterpret_cast<tnsSparseTensor*>(void_result);
-                    father_raw_sparse_tensor.push_back(father_result);
-                    break;
-                case Type::DENSETENSOR:
-                    tnsDenseTensor* father_result = reinterpret_cast<tnsDenseTensor*>(void_result);
-                    father_raw_dense_tensor.push_back(father_result);
-                    break;
-                case Type::NONE:
-                    break;
+                case Type::SPARSEMATRIX: {
+                    tnsSparseMatrix* result1 = reinterpret_cast<tnsSparseMatrix*>(void_result);
+                    father_raw_sparse_matrix.push_back(result1);
+                    break; }
+                case Type::DENSEMATRIX: {
+                    tnsDenseMatrix* result2 = reinterpret_cast<tnsDenseMatrix*>(void_result);
+                    father_raw_dense_matrix.push_back(result2);
+                    break; }
+                case Type::SPARSETENSOR: {
+                    tnsSparseTensor* result3 = reinterpret_cast<tnsSparseTensor*>(void_result);
+                    father_raw_sparse_tensor.push_back(result3);
+                    break; }
+                case Type::DENSETENSOR: {
+                    tnsDenseTensor* result4 = reinterpret_cast<tnsDenseTensor*>(void_result);
+                    father_raw_dense_tensor.push_back(result4);
+                    break; }
+                case Type::NONE: {
+                    break; }
             }
         }
         // 传递父节点结果到子节点中

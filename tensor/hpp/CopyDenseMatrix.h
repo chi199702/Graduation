@@ -16,6 +16,9 @@ public:
     virtual void InitParams(vector<void*> params) override;
     virtual Type get_type() override;
     ~CopyDenseMatrix();
+
+private:
+    tnsDenseMatrix mtx_B;
 };
 
 REGISTERTARM_CLASS(CopyDenseMatrix);

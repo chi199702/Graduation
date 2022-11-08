@@ -20,6 +20,7 @@ public:
 private:
     uint32_t nrows;
     uint32_t ncols;
+    tnsSparseMatrix matrix;
 };
 
 REGISTERTARM_CLASS(NewSparseMatrix);

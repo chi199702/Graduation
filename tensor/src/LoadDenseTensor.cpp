@@ -2,7 +2,6 @@
 
 void* LoadDenseTensor::Execute() {
     FILE* file = fopen(path.c_str(), "r");
-    tnsDenseTensor tensor;
     tnsLoadDenseTensor(&tensor, file);
 
     set_done_dense_tensor(&tensor);

@@ -11,7 +11,7 @@ void* MatricizationSparseTensor::Execute() {
     for(uint32_t i = cutPoint; i < tsr -> nmodes; ++i)
         col *= tsr -> ndims[i];   ///< 矩阵化后的行大小
 
-    tnsSparseMatrix spamtxa;
+    
     tnsNewSparseMatrix(&spamtxa, row, col);
     tnsMatricizationSpatsr(&spamtxa, tsr, cutPoint);
     

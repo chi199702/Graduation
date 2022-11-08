@@ -1,7 +1,6 @@
 #include "NewDenseMatrix.h"
 
 void* NewDenseMatrix::Execute() {
-    tnsDenseMatrix matrix;
     tnsNewDenseMatrix(&matrix, nrows, ncols);
 
     set_done_dense_matrix(&matrix);

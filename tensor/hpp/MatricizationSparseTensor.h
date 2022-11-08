@@ -18,6 +18,7 @@ public:
     ~MatricizationSparseTensor();
 private:
     uint32_t cutPoint;
+    tnsSparseMatrix spamtxa;
 };
 
 REGISTERTARM_CLASS(MatricizationSparseTensor);

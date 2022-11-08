@@ -18,6 +18,7 @@ public:
     ~TTMSparseTensor();
 private:
     uint32_t copt_mode;
+    tnsSparseTensor tensory;
 };
 
 REGISTERTARM_CLASS(TTMSparseTensor);

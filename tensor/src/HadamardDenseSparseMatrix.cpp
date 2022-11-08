@@ -6,9 +6,8 @@ void* HadamardDenseSparseMatrix::Execute() {
     tnsDenseMatrix* mtxAA = reinterpret_cast<tnsDenseMatrix*>(raw_dense_matrix[0]);
     tnsSparseMatrix* mtxBB = reinterpret_cast<tnsSparseMatrix*>(raw_sparse_matrix[0]);
 
-    tnsSparseMatrix mtxCC;
     tnsNewSparseMatrix(&mtxCC, mtxAA -> nrows, mtxAA -> ncols);
-
+    tnsHadamardDenSpamat(&mtxCC, mtxAA, mtxBB);
     set_done_sparse_matrix(&mtxCC);
     return &mtxCC;
 }

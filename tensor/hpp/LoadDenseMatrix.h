@@ -21,6 +21,7 @@ public:
     
 private:
     string path;
+    tnsDenseMatrix martix;
 };
 
 REGISTERTARM_CLASS(LoadDenseMatrix);

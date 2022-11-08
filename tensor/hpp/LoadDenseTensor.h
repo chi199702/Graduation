@@ -21,6 +21,7 @@ public:
     
 private:
     string path;
+    tnsDenseTensor tensor;
 };
 
 REGISTERTARM_CLASS(LoadDenseTensor);

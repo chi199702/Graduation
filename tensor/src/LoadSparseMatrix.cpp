@@ -2,7 +2,6 @@
 
 void* LoadSparseMatrix::Execute() {
     FILE* file = fopen(path.c_str(), "r");
-    tnsSparseMatrix martix;
     tnsLoadSparseMatrix(&martix, file);
 
     set_done_sparse_matrix(&martix);

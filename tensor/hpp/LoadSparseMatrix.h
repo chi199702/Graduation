@@ -21,6 +21,7 @@ public:
 
 private:
     string path;
+    tnsSparseMatrix martix;
 };
 
 REGISTERTARM_CLASS(LoadSparseMatrix);

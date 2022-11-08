@@ -1,7 +1,6 @@
 #include "ConstantDenseMatrix.h"
 
 void* ConstantDenseMatrix::Execute() {
-    tnsDenseMatrix matrix;
     tnsConstantDenseMatrix(&matrix, val);
 
     set_done_dense_matrix(&matrix);

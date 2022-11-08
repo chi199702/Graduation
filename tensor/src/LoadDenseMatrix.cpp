@@ -2,7 +2,6 @@
 
 void* LoadDenseMatrix::Execute() {
     FILE* file = fopen(path.c_str(), "r");
-    tnsDenseMatrix martix;
     tnsLoadDenseMatrix(&martix, file);
 
     set_done_dense_matrix(&martix);

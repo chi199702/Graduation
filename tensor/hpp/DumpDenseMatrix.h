@@ -20,6 +20,7 @@ public:
 
 private:
     string path;
+    tnsDenseMatrix* matrix;
 };
 
 REGISTERTARM_CLASS(DumpDenseMatrix);

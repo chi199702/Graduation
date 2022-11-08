@@ -16,6 +16,9 @@ public:
     virtual void InitParams(vector<void*> params) override;
     virtual Type get_type() override;
     ~PermuteSparseTensor();
+
+private:
+    tnsSparseTensor tsr_2;
 };
 
 REGISTERTARM_CLASS(PermuteSparseTensor);

@@ -3,7 +3,7 @@
 void* DumpDenseMatrix::Execute() {
     FILE* file = fopen(path.c_str(), "w");
     vector<void*> raw_dense_matrix = get_raw_dense_matrix();
-    tnsDenseMatrix* matrix = reinterpret_cast<tnsDenseMatrix*>(raw_dense_matrix[0]);
+    matrix = reinterpret_cast<tnsDenseMatrix*>(raw_dense_matrix[0]);
     tnsDumpDenseMatrix(matrix, file);
 
     set_done_dense_matrix(&matrix);

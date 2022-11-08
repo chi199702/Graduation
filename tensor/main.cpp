@@ -1,4 +1,5 @@
 #include <string>
+#include "ProcessorTArm.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,50 +13,51 @@ extern "C" {
 #endif
 
 using namespace std;
+using namespace json11;
 
 int main() {
     string cwm_json = 
     R"(
       [
         {
-          "name": "Reader",
-          "parameter_list": ["/home/cwm/Graduation/cv/photos_raw"],
+          "name": "NewDenseMatrix",
+          "parameter_list": [50, 50],
           "sequence": 1,
           "father": []
         },
         {
-          "name": "Resize",
-          "parameter_list": [80.0],
+          "name": "NewDenseMatrix",
+          "parameter_list": [50, 50],
           "sequence": 2,
-          "father": [1]
+          "father": []
         },
         {
-          "name": "Gray",
-          "parameter_list": [],
+          "name": "ConstantDenseMatrix",
+          "parameter_list": [2.0],
           "sequence": 3,
           "father": [1]
         },
         {
-          "name": "Cut",
-          "parameter_list": [0, 200, 0, 200],
+          "name": "ConstantDenseMatrix",
+          "parameter_list": [3.0],
           "sequence": 4,
-          "father": [1]
+          "father": [2]
         },
         {
-          "name": "Watermark",
-          "parameter_list": ["/home/cwm/Graduation/watermark.jpg"],
-          "sequence": 5,
-          "father": [2, 3, 4]
-        },
-        {
-          "name": "LPR",
+          "name": "HadamardDenseMatrix",
           "parameter_list": [],
+          "sequence": 5,
+          "father": [3, 4]
+        },
+        {
+          "name": "DumpDenseMatrix",
+          "parameter_list": ["/home/cwm/Graduation/tensor/data/re.tns"],
           "sequence": 6,
           "father": [5]
         },
         {
-          "name": "Writer",
-          "parameter_list": ["/home/cwm/Graduation/cv/photos_writer"],
+          "name": "FreeDenseMatrix",
+          "parameter_list": [],
           "sequence": 7,
           "father": [6]
         }

@@ -21,6 +21,7 @@ public:
 
 private:
     string path;
+    tnsSparseTensor tensor;
 };
 
 REGISTERTARM_CLASS(LoadSparseTensor);

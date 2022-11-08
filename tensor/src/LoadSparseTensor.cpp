@@ -2,7 +2,6 @@
 
 void* LoadSparseTensor::Execute() {
     FILE* file = fopen(path.c_str(), "r");
-    tnsSparseTensor tensor;
     tnsLoadSparseTensor(&tensor, file, 1);
 
     set_done_sparse_tensor(&tensor);

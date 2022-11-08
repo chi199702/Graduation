@@ -16,6 +16,9 @@ public:
     virtual void InitParams(vector<void*> params) override;
     virtual Type get_type() override;
     ~KroneckerDenseMatrix();
+
+private:
+    tnsDenseMatrix mtxc_dense;
 };
 
 REGISTERTARM_CLASS(KroneckerDenseMatrix);

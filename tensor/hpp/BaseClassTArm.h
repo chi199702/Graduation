@@ -3,9 +3,18 @@
 
 #include <string>
 #include <vector>
-#include <structs.h>
-#include <TArm.h>
 #include "ObjectFactoryTArm.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <getopt.h>
+#include <TArm.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 using namespace std;
 
@@ -15,7 +24,7 @@ enum Type {
 
 class BaseClassTArm {
 public:
-    BaseClassTArm(const string& _class_name = "Interface", const Type& _type = Type::SPARSETENSOR);
+    BaseClassTArm(const string& _class_name, const Type& _type);
 
     /**
      * @brief 核心代码，所有派生类必须在此函数中实现业务逻辑
@@ -27,6 +36,8 @@ public:
      * @param params 参数存放空间
      * */
     virtual void InitParams(vector<void*> params);
+
+    virtual Type get_type();
 
     virtual ~BaseClassTArm();
 
@@ -58,8 +69,7 @@ public:
     void* get_done_dense_matrix();
     void* get_done_index_vector();
     void* get_done_value_vector();
-
-    virtual Type get_type();
+    
 private:
     string class_name;
     Type type;        // 结果的类型
