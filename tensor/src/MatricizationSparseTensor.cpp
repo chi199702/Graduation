@@ -24,4 +24,8 @@ void MatricizationSparseTensor::InitParams(vector<void*> params) {
     cutPoint = *cutPoint_pt;
 }
 
+Type MatricizationSparseTensor::get_type() {
+    return get_type();
+}
+
 MatricizationSparseTensor::~MatricizationSparseTensor() {}

@@ -1,15 +1,15 @@
-#include "Processor.h"
+#include "ProcessorTArm.h"
 
-Processor::Processor() {}
+ProcessorTArm::ProcessorTArm() {}
 
-Processor::Processor(const string& _str) : str(_str), json(Json::parse(str, json_error)) {}
+ProcessorTArm::ProcessorTArm(const string& _str) : str(_str), json(Json::parse(str, json_error)) {}
 
-void Processor::Init() {
+void ProcessorTArm::Init() {
     parse_father();
     parse_params();
 }
 
-void Processor::parse_father() {
+void ProcessorTArm::parse_father() {
     const int calculate_count = json.array_items().size();  // 算子总数
     for (int i = 0; i < calculate_count; ++i) {
         int sequence = json[i]["sequence"].int_value(); // 算子序号
@@ -23,7 +23,7 @@ void Processor::parse_father() {
     }
 }
 
-void Processor::parse_params() {
+void ProcessorTArm::parse_params() {
     const int calculate_count = json.array_items().size();  // 算子总数
     for (int i = 0; i < calculate_count; ++i) {
         int sequence = json[i]["sequence"].int_value(); // 算子序号
@@ -47,10 +47,8 @@ void Processor::parse_params() {
     }
 }
 
-void Processor::process() {
+void ProcessorTArm::process() {
     Init();
-    // 打印 sequence_name、sequence_father、sequence_params
-//    print();
     const int calculate_count = json.array_items().size();  // 算子总数
     int completed = 0;   // 已执行完成的算子个数
 
@@ -92,31 +90,63 @@ void Processor::process() {
     }
 }
 
-bool Processor::ExecuteModule(int sequence) {
+bool ProcessorTArm::ExecuteModule(int sequence) {
     // 判断该算子是否可以执行
     if (!JudgeExecution(sequence)) {
         return false;
     }
+
     try {
         string& name = sequence_name[sequence];
-        BaseClass* instance = reinterpret_cast<BaseClass*>(GetInstance(name));
+        BaseClassTArm* instance = reinterpret_cast<BaseClassTArm*>(GetInstance(name));
         instance -> InitParams(sequence_params[sequence]);  // 为算子设置参数
+        sequence_type[sequence] = instance -> get_type();   // 设置算子的返回类型
         if (instance == nullptr) {
             throw runtime_error("exception occur in Processor.cpp::105, BaseClass* instance = reinterpret_cast<BaseClass*>(GetInstance(name))");
         }
+
         // 获取父节点的结果
-        vector<vector<Mat>> fathers_result;
-        vector<int> fathers = sequence_father[sequence];
+        vector<void*> fathers_result;
+        vector<int> fathers = sequence_father[sequence];    // 父节点列表
+        // 取出所有父节点的结果
+        vector<void*> father_raw_sparse_matrix;
+        vector<void*> father_raw_dense_matrix;
+        vector<void*> father_raw_sparse_tensor;
+        vector<void*> father_raw_dense_tensor;
         for (int father : fathers) {
-            for (vector<Mat>& images : results[father]) {
-                fathers_result.push_back(images);
+            Type father_type = sequence_type[father];
+            void* void_result = results[father];
+            // 判断父节点返回结果的类型，设置子节点对应的类型
+            switch (father_type) {
+                case Type::SPARSEMATRIX:
+                    tnsSparseMatrix* father_result = reinterpret_cast<tnsSparseMatrix*>(void_result);
+                    father_raw_sparse_matrix.push_back(father_result);
+                    break;
+                case Type::DENSEMATRIX:
+                    tnsDenseMatrix* father_result = reinterpret_cast<tnsDenseMatrix*>(void_result);
+                    father_raw_dense_matrix.push_back(father_result);
+                    break;
+                case Type::SPARSETENSOR:
+                    tnsSparseTensor* father_result = reinterpret_cast<tnsSparseTensor*>(void_result);
+                    father_raw_sparse_tensor.push_back(father_result);
+                    break;
+                case Type::DENSETENSOR:
+                    tnsDenseTensor* father_result = reinterpret_cast<tnsDenseTensor*>(void_result);
+                    father_raw_dense_tensor.push_back(father_result);
+                    break;
+                case Type::NONE:
+                    break;
             }
         }
-        instance -> set_raw_images(fathers_result); // 传递父节点的执行结果给算子
+        // 传递父节点结果到子节点中
+        instance -> set_raw_sparse_matrix(father_raw_sparse_matrix);
+        instance -> set_raw_dense_matrix(father_raw_dense_matrix);
+        instance -> set_raw_sparse_tensor(father_raw_sparse_tensor);
+        instance -> set_raw_dense_tensor(father_raw_dense_tensor);
         // 执行算子
-        vector<vector<Mat>>& result_image_s = instance -> Execute();
+        void* result = instance -> Execute();
         // 存放算子执行结果
-        results[sequence] = result_image_s;
+        results[sequence] = result;
     }catch (const runtime_error& error) {
         cout << error.what() << endl;
         exit(-1);
@@ -124,15 +154,13 @@ bool Processor::ExecuteModule(int sequence) {
         cout << error.what() << endl;
         exit(-1);
     }
-
-    return true;
 }
 
-void* Processor::GetInstance(const string& class_name) {
-    return ObjectFactory::CreateObject(class_name);
+void* ProcessorTArm::GetInstance(const string& class_name) {
+    return ObjectFactoryTArm::CreateObject(class_name);
 }
 
-bool Processor::JudgeExecution(int sequence) {
+bool ProcessorTArm::JudgeExecution(int sequence) {
     vector<int> fathers = sequence_father[sequence];
     if (fathers.empty()) {
         return true;
@@ -147,7 +175,7 @@ bool Processor::JudgeExecution(int sequence) {
     return true;
 }
 
-void Processor::print() {
+void ProcessorTArm::print() {
     for (auto p : sequence_name) {
         cout << p.first << " " << p.second << endl;
     }
@@ -162,7 +190,7 @@ void Processor::print() {
     }
 }
 
-Processor::~Processor() {
+ProcessorTArm::~ProcessorTArm() {
     for (pair<int, vector<void*>> p : sequence_params) {
         vector<void*> v_params = p.second;
         for (void* pt : v_params) {

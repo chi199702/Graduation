@@ -14,4 +14,8 @@ void LoadSparseTensor::InitParams(vector<void*> params) {
     path = *path_pt;
 }
 
+Type LoadSparseTensor::get_type() {
+    return get_type();
+}
+
 LoadSparseTensor::~LoadSparseTensor() {}

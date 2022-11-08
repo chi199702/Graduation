@@ -15,4 +15,8 @@ void NewSparseMatrix::InitParams(vector<void*> params) {
     ncols = *ncols_pt;
 }
 
+Type NewSparseMatrix::get_type() {
+    return get_type();
+}
+
 NewSparseMatrix::~NewSparseMatrix() {}

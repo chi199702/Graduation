@@ -15,4 +15,8 @@ void DumpDenseTensor::InitParams(vector<void*> params) {
     path = *path_pt;
 }
 
+Type DumpDenseTensor::get_type() {
+    return get_type();
+}
+
 DumpDenseTensor::~DumpDenseTensor() {}

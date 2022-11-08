@@ -10,4 +10,8 @@ void* FreeSparseMatrix::Execute() {
 
 void FreeSparseMatrix::InitParams(vector<void*> params) {}
 
+Type FreeSparseMatrix::get_type() {
+    return get_type();
+}
+
 FreeSparseMatrix::~FreeSparseMatrix() {}

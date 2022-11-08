@@ -1,27 +1,25 @@
-/**
- * 处理程序
- * */
-#ifndef __PROCESS_H
-#define __PROCESS_H
+#ifndef __PROCESSTARM__H
+#define __PROCESSTARM__H
 
-#include <opencv2/opencv.hpp>
 #include <vector>
 #include <queue>
 #include <unordered_map>
 #include <set>
 #include <memory>
 #include "json11.hpp"
-#include "Header.h"
+#include "BaseClassTArm.h"
 
-using namespace cv;
 using namespace std;
 using namespace json11;
 
-class Processor {
+/**
+ * @brief 由于张量库的算子是浅拷贝，所以算子的出度必须 <= 1
+ * */
+class ProcessorTArm {
 public:
-    Processor();
+    ProcessorTArm();
 
-    Processor(const string& _str);
+    ProcessorTArm(const string& _str);
 
     /**
      * @brief
@@ -69,18 +67,19 @@ public:
      * @brief 释放参数列表 sequence_params
      * 由于 void* 指向的都是简单数据类型, 所以可以直接使用 delete void*
      * */
-    ~Processor();
+    ~ProcessorTArm();
 
 private:
     string str;                                         // 描述 DAG 图的 json
     string json_error;                                  // 描述解析出错的原因
-    Json json;                                          // json 解析结果
+    Json json;                                          // json 解析器
     set<int> visited;                                   // 已遍历过的算子
     priority_queue<int> pending;                        // 待执行队列
     unordered_map<int, string> sequence_name;           // [算子序号, 算子名称]
     unordered_map<int, vector<int>> sequence_father;    // 算子的父节点列表
     unordered_map<int, vector<void*>> sequence_params;  // 参数列表
-    unordered_map<int, vector<vector<Mat>>> results;    // 执行结果
+    unordered_map<int, void*> results;                  // 执行结果
+    unordered_map<int, Type> sequence_type;             // [算子序号, 返回类型]
 };
 
 #endif

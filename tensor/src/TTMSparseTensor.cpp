@@ -15,9 +15,14 @@ void* TTMSparseTensor::Execute() {
     set_done_sparse_tensor(&tensory);
     return &tensory;
 }
+
 void TTMSparseTensor::InitParams(vector<void*> params) {
     uint32_t* copt_mode_pt = reinterpret_cast<uint32_t*>(params[0]);
     copt_mode = *copt_mode_pt;
+}
+
+Type TTMSparseTensor::get_type() {
+    return get_type();
 }
 
 TTMSparseTensor::~TTMSparseTensor() {}

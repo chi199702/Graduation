@@ -10,4 +10,8 @@ void* FreeSparseTensor::Execute() {
 
 void FreeSparseTensor::InitParams(vector<void*> params) {}
 
+Type FreeSparseTensor::get_type() {
+    return get_type();
+}
+
 FreeSparseTensor::~FreeSparseTensor() {}

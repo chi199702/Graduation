@@ -16,6 +16,7 @@ public:
     LoadDenseTensor() : BaseClassTArm("LoadDenseTensor", Type::DENSETENSOR) {}
     virtual void* Execute() override;
     virtual void InitParams(vector<void*> params) override;
+    virtual Type get_type() override;
     ~LoadDenseTensor();
     
 private:

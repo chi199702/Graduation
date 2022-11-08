@@ -15,6 +15,7 @@ public:
     DumpSparseMatrix() : BaseClassTArm("DumpSparseMatrix", Type::SPARSEMATRIX) {}
     virtual void* Execute() override;
     virtual void InitParams(vector<void*> params) override;
+    virtual Type get_type() override;
     ~DumpSparseMatrix();
 
 private:

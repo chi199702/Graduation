@@ -10,4 +10,8 @@ void* FreeDenseTensor::Execute() {
 
 void FreeDenseTensor::InitParams(vector<void*> params) {}
 
+Type FreeDenseTensor::get_type() {
+    return get_type();
+}
+
 FreeDenseTensor::~FreeDenseTensor() {}

@@ -12,4 +12,8 @@ void* HadamardDenseMatrix::Execute() {
 
 void HadamardDenseMatrix::InitParams(vector<void*> params) {}
 
+Type HadamardDenseMatrix::get_type() {
+    return get_type();
+}
+
 HadamardDenseMatrix::~HadamardDenseMatrix() {}

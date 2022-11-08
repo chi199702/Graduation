@@ -15,4 +15,8 @@ void DumpSparseTensor::InitParams(vector<void*> params) {
     path = *path_pt;
 }
 
+Type DumpSparseTensor::get_type() {
+    return get_type();
+}
+
 DumpSparseTensor::~DumpSparseTensor() {}

@@ -13,4 +13,7 @@ void ConstantDenseMatrix::InitParams(vector<void*> params) {
     val = *val_pt;
 }
 
+Type ConstantDenseMatrix::get_type() {
+    return get_type();
+}
 ConstantDenseMatrix::~ConstantDenseMatrix() {}

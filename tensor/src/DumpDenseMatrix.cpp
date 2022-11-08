@@ -15,4 +15,8 @@ void DumpDenseMatrix::InitParams(vector<void*> params) {
     path = *path_pt;
 }
 
+Type DumpDenseMatrix::get_type() {
+    return get_type();
+}
+
 DumpDenseMatrix::~DumpDenseMatrix() {}

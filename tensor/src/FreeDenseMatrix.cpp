@@ -10,4 +10,8 @@ void* FreeDenseMatrix::Execute() {
 
 void FreeDenseMatrix::InitParams(vector<void*> params) {}
 
+Type FreeDenseMatrix::get_type() {
+    return get_type();
+}
+
 FreeDenseMatrix::~FreeDenseMatrix() {}

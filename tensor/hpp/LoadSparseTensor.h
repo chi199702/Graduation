@@ -16,6 +16,7 @@ public:
     LoadSparseTensor() : BaseClassTArm("LoadSparseTensor", Type::SPARSETENSOR) {}
     virtual void* Execute() override;
     virtual void InitParams(vector<void*> params) override;
+    virtual Type get_type() override;
     ~LoadSparseTensor();
 
 private:

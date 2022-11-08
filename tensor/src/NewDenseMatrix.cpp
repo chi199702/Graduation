@@ -15,4 +15,8 @@ void NewDenseMatrix::InitParams(vector<void*> params) {
     ncols = *ncols_pt;
 }
 
+Type NewDenseMatrix::get_type() {
+    return get_type();
+}
+
 NewDenseMatrix::~NewDenseMatrix() {}

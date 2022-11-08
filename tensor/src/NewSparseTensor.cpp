@@ -12,4 +12,8 @@ void* NewSparseTensor::Execute() {
 
 void NewSparseTensor::InitParams(vector<void*> params) {}
 
+Type NewSparseTensor::get_type() {
+    return get_type();
+}
+
 NewSparseTensor::~NewSparseTensor() {}

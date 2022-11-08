@@ -14,6 +14,7 @@ public:
     NewSparseMatrix() : BaseClassTArm("NewSparseMatrix", Type::SPARSEMATRIX) {}
     virtual void* Execute() override;
     virtual void InitParams(vector<void*> params) override;
+    virtual Type get_type() override;
     ~NewSparseMatrix();
 
 private:

@@ -59,7 +59,7 @@ public:
     void* get_done_index_vector();
     void* get_done_value_vector();
 
-    Type get_type();
+    virtual Type get_type();
 private:
     string class_name;
     Type type;        // 结果的类型

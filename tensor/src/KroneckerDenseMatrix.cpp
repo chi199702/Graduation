@@ -15,4 +15,8 @@ void* KroneckerDenseMatrix::Execute() {
 
 void KroneckerDenseMatrix::InitParams(vector<void*> params) {}
 
+Type KroneckerDenseMatrix::get_type() {
+    return get_type();
+}
+
 KroneckerDenseMatrix::~KroneckerDenseMatrix() {}

@@ -14,4 +14,8 @@ void* CopyDenseMatrix::Execute() {
 
 void CopyDenseMatrix::InitParams(vector<void*> params) {}
 
+Type CopyDenseMatrix::get_type() {
+    return get_type();
+}
+
 CopyDenseMatrix::~CopyDenseMatrix() {}
