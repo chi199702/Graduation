@@ -20,12 +20,8 @@ void* MatricizationSparseTensor::Execute() {
 }
 
 void MatricizationSparseTensor::InitParams(vector<void*> params) {
-    uint32_t* cutPoint_pt = reinterpret_cast<uint32_t*>(params[0]);
+    double* cutPoint_pt = reinterpret_cast<double*>(params[0]);
     cutPoint = *cutPoint_pt;
-}
-
-Type MatricizationSparseTensor::get_type() {
-    return get_type();
 }
 
 MatricizationSparseTensor::~MatricizationSparseTensor() {}

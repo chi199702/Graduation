@@ -14,7 +14,6 @@ public:
     TTMSparseTensor() : BaseClassTArm("TTMSparseTensor", Type::SPARSETENSOR) {}
     virtual void* Execute() override;
     virtual void InitParams(vector<void*> params) override;
-    virtual Type get_type() override;
     ~TTMSparseTensor();
 private:
     uint32_t copt_mode;

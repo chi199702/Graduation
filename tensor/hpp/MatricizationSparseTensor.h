@@ -14,7 +14,6 @@ public:
     MatricizationSparseTensor() : BaseClassTArm("MatricizationSparseTensor", Type::SPARSEMATRIX) {}
     virtual void* Execute() override;
     virtual void InitParams(vector<void*> params) override;
-    virtual Type get_type() override;
     ~MatricizationSparseTensor();
 private:
     uint32_t cutPoint;

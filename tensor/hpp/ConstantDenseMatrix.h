@@ -11,15 +11,13 @@ using namespace std;
  * */
 class ConstantDenseMatrix : public BaseClassTArm {
 public:
-    ConstantDenseMatrix() : BaseClassTArm("ConstantDenseMatrix", Type::DENSETENSOR) {}
+    ConstantDenseMatrix() : BaseClassTArm("ConstantDenseMatrix", Type::DENSEMATRIX) {}
     virtual void* Execute() override;
     virtual void InitParams(vector<void*> params) override;
-    virtual Type get_type() override;
     ~ConstantDenseMatrix();
 
 private:
     float val;
-    tnsDenseMatrix matrix;
 };
 
 REGISTERTARM_CLASS(ConstantDenseMatrix);

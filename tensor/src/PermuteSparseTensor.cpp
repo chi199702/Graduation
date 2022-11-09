@@ -13,8 +13,4 @@ void* PermuteSparseTensor::Execute() {
 
 void PermuteSparseTensor::InitParams(vector<void*> params) {}
 
-Type PermuteSparseTensor::get_type() {
-    return get_type();
-}
-
 PermuteSparseTensor::~PermuteSparseTensor() {}

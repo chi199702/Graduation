@@ -1,10 +1,10 @@
 #include "Cut.h"
 
 void Cut::InitParams(vector<void*> params) {
-    unsigned int* _height_up_pt   = reinterpret_cast<unsigned int*>(params[0]);
-    unsigned int* _height_down_pt = reinterpret_cast<unsigned int*>(params[1]);
-    unsigned int* _width_left_pt  = reinterpret_cast<unsigned int*>(params[2]);
-    unsigned int* _width_right_pt = reinterpret_cast<unsigned int*>(params[3]);
+    double* _height_up_pt   = reinterpret_cast<double*>(params[0]);
+    double* _height_down_pt = reinterpret_cast<double*>(params[1]);
+    double* _width_left_pt  = reinterpret_cast<double*>(params[2]);
+    double* _width_right_pt = reinterpret_cast<double*>(params[3]);
 
     height_up   = *_height_up_pt;
     height_down = *_height_down_pt;
@@ -22,7 +22,7 @@ vector<vector<Mat>>& Cut::Execute() {
     }
     cout << "Cut 处理图片数量：" << result_image.size() << endl;
     PushBack(result_image);
-    cout << "Cut::Execute() has execute success~" << endl;
+    cout << "Cut::Execute() has execute success~" << endl; 
     return get_result_image_s();
 }
 

@@ -15,7 +15,6 @@ public:
     DumpDenseTensor() : BaseClassTArm("DumpDenseTensor", Type::DENSETENSOR) {}
     virtual void* Execute() override;
     virtual void InitParams(vector<void*> params) override;
-    virtual Type get_type() override;
     ~DumpDenseTensor();
 
 private:

@@ -9,14 +9,10 @@ void* NewSparseMatrix::Execute() {
 }
 
 void NewSparseMatrix::InitParams(vector<void*> params) {
-    uint32_t* nrows_pt = reinterpret_cast<uint32_t*>(params[0]);
-    uint32_t* ncols_pt = reinterpret_cast<uint32_t*>(params[1]);
+    double* nrows_pt = reinterpret_cast<double*>(params[0]);
+    double* ncols_pt = reinterpret_cast<double*>(params[1]);
     nrows = *nrows_pt;
     ncols = *ncols_pt;
-}
-
-Type NewSparseMatrix::get_type() {
-    return get_type();
 }
 
 NewSparseMatrix::~NewSparseMatrix() {}

@@ -77,7 +77,7 @@ int main() {
         },
         {
           "name": "Cut",
-          "parameter_list": [0, 200, 0, 200],
+          "parameter_list": [0, 50, 0, 50],
           "sequence": 4,
           "father": [1]
         },

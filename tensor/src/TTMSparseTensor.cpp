@@ -17,12 +17,8 @@ void* TTMSparseTensor::Execute() {
 }
 
 void TTMSparseTensor::InitParams(vector<void*> params) {
-    uint32_t* copt_mode_pt = reinterpret_cast<uint32_t*>(params[0]);
+    double* copt_mode_pt = reinterpret_cast<double*>(params[0]);
     copt_mode = *copt_mode_pt;
-}
-
-Type TTMSparseTensor::get_type() {
-    return get_type();
 }
 
 TTMSparseTensor::~TTMSparseTensor() {}

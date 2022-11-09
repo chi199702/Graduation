@@ -79,7 +79,7 @@ private:
     unordered_map<int, vector<int>> sequence_father;    // 算子的父节点列表
     unordered_map<int, vector<void*>> sequence_params;  // 参数列表
     unordered_map<int, void*> results;                  // 执行结果
-    unordered_map<int, Type> sequence_type;             // [算子序号, 返回类型]
+    unordered_map<int, Type> sequence_type;             // [算子序号, 返回结果类型]
 };
 
 #endif

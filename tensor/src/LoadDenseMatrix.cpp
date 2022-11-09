@@ -13,8 +13,4 @@ void LoadDenseMatrix::InitParams(vector<void*> params) {
     path = *path_pt;
 }
 
-Type LoadDenseMatrix::get_type() {
-    return get_type();
-}
-
 LoadDenseMatrix::~LoadDenseMatrix() {}

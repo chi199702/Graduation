@@ -14,7 +14,6 @@ public:
     FreeDenseMatrix() : BaseClassTArm("FreeDenseMatrix", Type::NONE) {}
     virtual void* Execute() override;
     virtual void InitParams(vector<void*> params) override;
-    virtual Type get_type() override;
     ~FreeDenseMatrix();
 };
 

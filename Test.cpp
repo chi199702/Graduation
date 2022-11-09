@@ -1,11 +1,11 @@
-#include <opencv2/opencv.hpp>
+// #include <opencv2/opencv.hpp>
 #include <iostream>
-#include <sys/wait.h>
+// #include <sys/wait.h>
 
 using namespace std;
-using namespace cv;
+// using namespace cv;
 
-void ExecuteShell(string& cmd) {
+/* void ExecuteShell(string& cmd) {
     FILE* fp = NULL;
     fp = popen(cmd.c_str(), "w");
     if (!fp) {
@@ -24,15 +24,33 @@ void Execute() {
     string second_cmd = "python test.py --src " + src_path + " --dst " + dst_path;
     string complete_cmd = first_cmd + " && " + second_cmd;
     ExecuteShell(complete_cmd);
-}
+} */
+
+// class Test {
+// public:
+//     Test() {}
+
+//     void* Execute(int num) {
+//         row = new int(num);
+//         return row;
+//     }
+// private:
+//     int* row;
+// };
+
+// void* func1() {
+//     Test* t = new Test();
+//     return t -> Execute(50);
+// }
 
 int main() {
-    // Mat image = imread("/home/cwm/Graduation/cv/photos/1.png");
-    // Mat result = Trim(image);
-    // cout << result.size().width << " " << result.size().height << endl;
-    // imwrite("/home/cwm/Graduation/cv/photo_results/1.png", result);
-
-    Execute();
-
+    double d = 200.0;
+    double* a = new double(d);
+    void* tmp_pt = a;
+    double* b = reinterpret_cast<double*>(tmp_pt);
+    unsigned int n1 = *b;
+    float n2 = *b;
+    int n3 = *b;
+    cout << n1 << " " << n2 << " " << n3 << endl;
     return 0;
 }

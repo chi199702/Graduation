@@ -14,7 +14,6 @@ public:
     KroneckerDenseMatrix() : BaseClassTArm("KroneckerDenseMatrix", Type::DENSEMATRIX) {};
     virtual void* Execute() override;
     virtual void InitParams(vector<void*> params) override;
-    virtual Type get_type() override;
     ~KroneckerDenseMatrix();
 
 private:

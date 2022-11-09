@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 #include "ProcessorTArm.h"
 
 #ifdef __cplusplus
@@ -54,15 +55,18 @@ int main() {
           "parameter_list": ["/home/cwm/Graduation/tensor/data/re.tns"],
           "sequence": 6,
           "father": [5]
-        },
-        {
-          "name": "FreeDenseMatrix",
-          "parameter_list": [],
-          "sequence": 7,
-          "father": [6]
         }
       ]
     )"; 
-
+    
+    ProcessorTArm processor(cwm_json);
+    processor.process();
     return 0;
 }
+
+        // {
+        //   "name": "FreeDenseMatrix",
+        //   "parameter_list": [],
+        //   "sequence": 7,
+        //   "father": [6]
+        // }

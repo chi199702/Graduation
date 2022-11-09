@@ -12,8 +12,4 @@ void* HadamardSparseMatrix::Execute() {
 
 void HadamardSparseMatrix::InitParams(vector<void*> params) {}
 
-Type HadamardSparseMatrix::get_type() {
-    return get_type();
-}
-
 HadamardSparseMatrix::~HadamardSparseMatrix() {}

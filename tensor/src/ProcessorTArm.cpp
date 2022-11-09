@@ -32,9 +32,10 @@ void ProcessorTArm::parse_params() {
         for (Json param : params) {
             void* value;
             switch (param.type()) {
-                case Json::Type::NUMBER:
+                case Json::Type::NUMBER: {
                     value = new double(param.number_value());
                     break;
+                }
                 case Json::Type::STRING:
                     value = new string(param.string_value());
                     break;
@@ -121,21 +122,26 @@ bool ProcessorTArm::ExecuteModule(int sequence) {
                 case Type::SPARSEMATRIX: {
                     tnsSparseMatrix* result1 = reinterpret_cast<tnsSparseMatrix*>(void_result);
                     father_raw_sparse_matrix.push_back(result1);
-                    break; }
+                    break;
+                }
                 case Type::DENSEMATRIX: {
                     tnsDenseMatrix* result2 = reinterpret_cast<tnsDenseMatrix*>(void_result);
                     father_raw_dense_matrix.push_back(result2);
-                    break; }
+                    break;
+                }
                 case Type::SPARSETENSOR: {
                     tnsSparseTensor* result3 = reinterpret_cast<tnsSparseTensor*>(void_result);
                     father_raw_sparse_tensor.push_back(result3);
-                    break; }
+                    break;
+                }
                 case Type::DENSETENSOR: {
                     tnsDenseTensor* result4 = reinterpret_cast<tnsDenseTensor*>(void_result);
                     father_raw_dense_tensor.push_back(result4);
-                    break; }
+                    break; 
+                }
                 case Type::NONE: {
-                    break; }
+                    break;
+                }
             }
         }
         // 传递父节点结果到子节点中
@@ -150,10 +156,14 @@ bool ProcessorTArm::ExecuteModule(int sequence) {
     }catch (const runtime_error& error) {
         cout << error.what() << endl;
         exit(-1);
+        return false;
     }catch (const exception& error) {
         cout << error.what() << endl;
         exit(-1);
+        return false;
     }
+
+    return true;
 }
 
 void* ProcessorTArm::GetInstance(const string& class_name) {

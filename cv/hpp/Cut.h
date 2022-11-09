@@ -6,6 +6,7 @@
 #define __CUT__CPP
 
 #include <vector>
+#include <algorithm>
 #include "BaseClass.h"
 
 using namespace cv;

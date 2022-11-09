@@ -1,21 +1,18 @@
 #include "NewDenseMatrix.h"
 
 void* NewDenseMatrix::Execute() {
+    cout << "NewDenseMatrix start ~" << endl;
     tnsNewDenseMatrix(&matrix, nrows, ncols);
-
     set_done_dense_matrix(&matrix);
+    cout << "NewDenseMatrix end ~" << endl;
     return &matrix;
 }
 
 void NewDenseMatrix::InitParams(vector<void*> params) {
-    uint32_t* nrows_pt = reinterpret_cast<uint32_t*>(params[0]);
-    uint32_t* ncols_pt = reinterpret_cast<uint32_t*>(params[1]);
+    double* nrows_pt = reinterpret_cast<double*>(params[0]);
+    double* ncols_pt = reinterpret_cast<double*>(params[1]);
     nrows = *nrows_pt;
     ncols = *ncols_pt;
-}
-
-Type NewDenseMatrix::get_type() {
-    return get_type();
 }
 
 NewDenseMatrix::~NewDenseMatrix() {}

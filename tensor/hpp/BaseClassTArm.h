@@ -37,7 +37,7 @@ public:
      * */
     virtual void InitParams(vector<void*> params);
 
-    virtual Type get_type();
+    Type get_type();
 
     virtual ~BaseClassTArm();
 

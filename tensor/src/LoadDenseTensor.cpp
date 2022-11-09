@@ -13,8 +13,4 @@ void LoadDenseTensor::InitParams(vector<void*> params) {
     path = *path_pt;
 }
 
-Type LoadDenseTensor::get_type() {
-    return get_type();
-}
-
 LoadDenseTensor::~LoadDenseTensor() {}

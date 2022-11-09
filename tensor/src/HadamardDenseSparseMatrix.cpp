@@ -14,8 +14,4 @@ void* HadamardDenseSparseMatrix::Execute() {
 
 void HadamardDenseSparseMatrix::InitParams(vector<void*> params) {}
 
-Type HadamardDenseSparseMatrix::get_type() {
-    return get_type();
-}
-
 HadamardDenseSparseMatrix::~HadamardDenseSparseMatrix() {}

@@ -7,6 +7,7 @@ g++ Test.cpp -o test -I/home/cwm/armtensor/include -L/home/cwm/armtensor/build -
 
 g++ \
 /home/cwm/Graduation/tensor/main.cpp \
+/home/cwm/Graduation/tensor/src/ObjectFactoryTArm.cpp \
 /home/cwm/Graduation/tensor/src/BaseClassTArm.cpp \
 /home/cwm/Graduation/tensor/src/ConstantDenseMatrix.cpp \
 /home/cwm/Graduation/tensor/src/CopyDenseMatrix.cpp \
@@ -30,7 +31,6 @@ g++ \
 /home/cwm/Graduation/tensor/src/NewDenseMatrix.cpp \
 /home/cwm/Graduation/tensor/src/NewSparseMatrix.cpp \
 /home/cwm/Graduation/tensor/src/NewSparseTensor.cpp \
-/home/cwm/Graduation/tensor/src/ObjectFactoryTArm.cpp \
 /home/cwm/Graduation/tensor/src/PermuteSparseTensor.cpp \
 /home/cwm/Graduation/tensor/src/ProcessorTArm.cpp \
 /home/cwm/Graduation/tensor/src/TTMSparseTensor.cpp \
