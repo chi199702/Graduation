@@ -7,7 +7,7 @@ void* DumpDenseTensor::Execute() {
     tnsDumpDenseTensor(tensor, file);
 
     set_done_dense_matrix(&tensor);
-    return &tensor;
+    return tensor;
 }
 
 void DumpDenseTensor::InitParams(vector<void*> params) {

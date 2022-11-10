@@ -7,7 +7,7 @@ void* DumpSparseMatrix::Execute() {
     tnsDumpSparseMatrix(matrix, file);
 
     set_done_sparse_matrix(&matrix);
-    return &matrix;
+    return matrix;
 }
 
 void DumpSparseMatrix::InitParams(vector<void*> params) {

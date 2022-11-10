@@ -22,13 +22,13 @@ int main() {
       [
         {
           "name": "NewDenseMatrix",
-          "parameter_list": [50, 50],
+          "parameter_list": [40000, 40000],
           "sequence": 1,
           "father": []
         },
         {
           "name": "NewDenseMatrix",
-          "parameter_list": [50, 50],
+          "parameter_list": [40000, 40000],
           "sequence": 2,
           "father": []
         },
@@ -55,6 +55,12 @@ int main() {
           "parameter_list": ["/home/cwm/Graduation/tensor/data/re.tns"],
           "sequence": 6,
           "father": [5]
+        },
+        {
+          "name": "FreeDenseMatrix",
+          "parameter_list": [],
+          "sequence": 7,
+          "father": [6]
         }
       ]
     )"; 
@@ -64,9 +70,4 @@ int main() {
     return 0;
 }
 
-        // {
-        //   "name": "FreeDenseMatrix",
-        //   "parameter_list": [],
-        //   "sequence": 7,
-        //   "father": [6]
-        // }
+        

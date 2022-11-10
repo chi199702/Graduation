@@ -1,9 +1,7 @@
 #include "NewSparseMatrix.h"
 
 void* NewSparseMatrix::Execute() {
-    
     tnsNewSparseMatrix(&matrix, nrows, ncols);
-
     set_done_sparse_matrix(&matrix);
     return &matrix;
 }

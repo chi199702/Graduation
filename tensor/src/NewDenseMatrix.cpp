@@ -1,10 +1,8 @@
 #include "NewDenseMatrix.h"
 
 void* NewDenseMatrix::Execute() {
-    cout << "NewDenseMatrix start ~" << endl;
     tnsNewDenseMatrix(&matrix, nrows, ncols);
     set_done_dense_matrix(&matrix);
-    cout << "NewDenseMatrix end ~" << endl;
     return &matrix;
 }
 

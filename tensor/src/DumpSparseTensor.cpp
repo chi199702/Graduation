@@ -7,7 +7,7 @@ void* DumpSparseTensor::Execute() {
     tnsDumpSparseTensor(tensor, file);
 
     set_done_sparse_tensor(&tensor);
-    return &tensor;
+    return tensor;
 }
 
 void DumpSparseTensor::InitParams(vector<void*> params) {
