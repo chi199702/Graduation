@@ -1,7 +1,7 @@
 #include "TTMSparseTensor.h"
 
 void* TTMSparseTensor::Execute() {
-    uint32_t copt_mode = 0;
+    cout << "TTMSparseTensor start~" << endl;
     vector<void*> raw_sparse_tensor = get_raw_sparse_tensor();
     vector<void*> raw_dense_matrix = get_raw_dense_matrix();
     tnsSparseTensor* tensorx = reinterpret_cast<tnsSparseTensor*>(raw_sparse_tensor[0]);
@@ -13,6 +13,7 @@ void* TTMSparseTensor::Execute() {
     tnsTTMSpatsr(&tensory, tensorx, denmat, copt_mode);
     
     set_done_sparse_tensor(&tensory);
+    cout << "TTMSparseTensor end~" << endl;
     return &tensory;
 }
 

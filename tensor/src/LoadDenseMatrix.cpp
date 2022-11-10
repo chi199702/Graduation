@@ -1,10 +1,12 @@
 #include "LoadDenseMatrix.h"
 
 void* LoadDenseMatrix::Execute() {
+    cout << "LoadDenseMatrix start~" << endl;
     FILE* file = fopen(path.c_str(), "r");
     tnsLoadDenseMatrix(&martix, file);
 
     set_done_dense_matrix(&martix);
+    cout << "LoadDenseMatrix end~" << endl;
     return &martix;
 }
 
