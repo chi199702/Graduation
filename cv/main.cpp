@@ -83,7 +83,7 @@ int main() {
         },
         {
           "name": "Watermark",
-          "parameter_list": ["/home/cwm/Graduation/watermark.jpg"],
+          "parameter_list": ["/home/cwm/Graduation/cv/watermark.jpg"],
           "sequence": 5,
           "father": [2, 3, 4]
         },

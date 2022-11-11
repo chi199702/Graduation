@@ -41,4 +41,5 @@ g++ \
 -I/home/cwm/Graduation/tensor/hpp \
 -I/home/cwm/Graduation/tensor/json11 \
 -I/home/cwm/Graduation/tensor/include \
--L/home/cwm/Graduation/tensor -lTArm -DTARM_INDEX_TYPEWIDTH=32 -DTARM_VALUE_TYPEWIDTH=32
+-L/home/cwm/Graduation/tensor -lTArm -DTARM_INDEX_TYPEWIDTH=32 -DTARM_VALUE_TYPEWIDTH=32 \
+-lpthread

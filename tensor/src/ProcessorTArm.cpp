@@ -1,10 +1,40 @@
 #include "ProcessorTArm.h"
 
+class ProcessorTArm;
+
+struct Package {
+    Package(int _sequence, ProcessorTArm* _process) : sequence(_sequence), process(_process) {}
+    int sequence;
+    ProcessorTArm* process;
+};
+
+void* threadfunc(void* param);
+
 ProcessorTArm::ProcessorTArm() {}
 
-ProcessorTArm::ProcessorTArm(const string& _str) : str(_str), json(Json::parse(str, json_error)) {}
+ProcessorTArm::ProcessorTArm(const string& _str, const bool _multi_thread) : str(_str), multi_thread(_multi_thread), json(Json::parse(str, json_error)) {}
 
 void ProcessorTArm::Init() {
+    // 设置所有算子状态为 STATIC、将所有算子添加进待执行队列中
+    const int calculate_count = json.array_items().size();  // 算子总数
+    for (int i = 0; i < calculate_count; ++i) {
+        int sequence = json[i]["sequence"].int_value();
+        sequence_state[sequence] = STATE::STATIC;
+        pending.push(sequence);
+    }
+    cout << "输出队列元素：";
+    queue<int> tmp = pending;
+    while (!tmp.empty()) {
+        cout << tmp.front();
+        tmp.pop();
+        cout << " ";
+    }
+    cout << endl;
+    cout << "输出每个节点的状态：";
+    for (auto p : sequence_state) {
+        cout << p.first << " " << p.second << endl;
+    }
+    cout << "~~~~~~" << endl;
     parse_father();
     parse_params();
 }
@@ -48,68 +78,55 @@ void ProcessorTArm::parse_params() {
     }
 }
 
+void ProcessorTArm::AgentExecute(int sequence) {
+    // 判断该算子的父节点是否全部执行完毕
+    if (!JudgeExecution(sequence)) {
+        return;
+    }
+    if (multi_thread) {
+        pthread_t thread;
+        Package* package = new Package(sequence, this);
+        if (pthread_create(&thread, NULL, threadfunc, package) != 0) {
+            cout << "线程创建失败~" << endl;
+            return;
+        }
+        // 当子线程先于父线程执行时,算子状态可能变为 STATE::END
+        if (sequence_state[sequence] == STATE::STATIC) {
+            sequence_state[sequence] = STATE::RUNNING;
+        }
+    }else {
+        if (ExecuteModule(sequence)) {
+            sequence_state[sequence] = STATE::END;
+        }else {
+            cout << "算子执行出错~" << endl;
+        }
+    }
+}
+
 void ProcessorTArm::process() {
     Init();
-    const int calculate_count = json.array_items().size();  // 算子总数
-    int completed = 0;   // 已执行完成的算子个数
-
-    while (completed < calculate_count) {
-        // 遍历所有的算子，取出第一个未被遍历过的算子
-        int no_visited = -1;
-        for (int i = 0; i < calculate_count; ++i) {
-            int sequence = json[i]["sequence"].int_value(); // 算子序号
-            auto ite = visited.find(sequence);
-            if (ite == visited.end()) {                     // 该算子未被遍历过
-                no_visited = sequence;
-                visited.insert(sequence);
-                break;
-            }
-        }
-
-        if (no_visited == -1) {     // 所有算子都已经遍历过了
-            if (pending.empty()) {  // 所有算子都已经执行完毕
-                break;
-            }else {
-                int sequence = pending.top();                    // 取出优先队列中的一个算子
-                pending.pop();
-                bool execute_result = ExecuteModule(sequence);   // 执行该算子
-                if (!execute_result) {                           // 执行失败，存入优先队列
-                    pending.push(sequence);
-                }else {
-                    ++completed;
-                }
-            }
-        }else { // 执行该算子
-            int sequence = no_visited;
-            bool execute_result = ExecuteModule(sequence);   // 执行该算子
-            if (!execute_result) {                           // 执行失败，存入优先队列
-                pending.push(sequence);
-            }else {
-                ++completed;
-            }
+    while (!pending.empty()) {
+        int sequence = pending.front();
+        pending.pop();
+        AgentExecute(sequence);
+        if (sequence_state[sequence] == STATE::STATIC) {
+            pending.push(sequence);
         }
     }
 }
 
 bool ProcessorTArm::ExecuteModule(int sequence) {
-    // 判断该算子是否可以执行
-    if (!JudgeExecution(sequence)) {
-        return false;
-    }
-
     try {
         string& name = sequence_name[sequence];
         BaseClassTArm* instance = reinterpret_cast<BaseClassTArm*>(GetInstance(name));
-        instance -> InitParams(sequence_params[sequence]);  // 为算子设置参数
-        sequence_type[sequence] = instance -> get_type();   // 设置算子的返回类型
+        instance -> InitParams(sequence_params[sequence]);
+        sequence_type[sequence] = instance -> get_type();
         if (instance == nullptr) {
             throw runtime_error("exception occur in Processor.cpp::105, BaseClass* instance = reinterpret_cast<BaseClass*>(GetInstance(name))");
         }
 
-        // 获取父节点的结果
-        vector<void*> fathers_result;
-        vector<int> fathers = sequence_father[sequence];    // 父节点列表
         // 取出所有父节点的结果
+        vector<int> fathers = sequence_father[sequence];
         vector<void*> father_raw_sparse_matrix;
         vector<void*> father_raw_dense_matrix;
         vector<void*> father_raw_sparse_tensor;
@@ -177,7 +194,7 @@ bool ProcessorTArm::JudgeExecution(int sequence) {
     }
 
     for (const int father : fathers) {
-        if (visited.find(father) == visited.end()) {
+        if (sequence_state[father] != STATE::END) {
             return false;
         }
     }
@@ -198,6 +215,29 @@ void ProcessorTArm::print() {
         }
         cout << " " << "]" << endl;
     }
+}
+
+void* threadfunc(void* param) {
+    Package* package = reinterpret_cast<Package*>(param);
+    int sequence = package -> sequence;
+    ProcessorTArm* process = package -> process;
+    if (sequence == 7) {
+        cout << "11111111111" << endl;
+        cout << process -> sequence_state.size() << endl;
+        for (auto p : process -> sequence_state) {
+            cout << p.first << " " << p.second << endl;
+        }
+        cout << "2222222222" << endl;
+    }
+    bool result = process -> ExecuteModule(sequence);
+    bool* result_pt = new bool(result);
+    // 设置该算子状态为已完成
+    if (*result_pt) {
+        process -> sequence_state[sequence] = ProcessorTArm::STATE::END;
+    }else {
+        cout << "算子执行出错~" << endl;
+    }
+    return result_pt;
 }
 
 ProcessorTArm::~ProcessorTArm() {

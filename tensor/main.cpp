@@ -70,38 +70,50 @@ int main() {
       [
         {
           "name": "LoadSparseTensor",
-          "parameter_list": ["/data/cwm/pytools/spatns100.tns"],
+          "parameter_list": ["/data/cwm/spatns10000.tns"],
           "sequence": 1,
           "father": []
         },
         {
-          "name": "LoadDenseMatrix",
-          "parameter_list": ["/data/cwm/pytools/denmtx_100_100.mtx"],
+          "name": "LoadSparseTensor",
+          "parameter_list": ["/data/cwm/spatns10000.tns"],
           "sequence": 2,
           "father": []
         },
         {
-          "name": "TTMSparseTensor",
-          "parameter_list": [1],
+          "name": "PermuteSparseTensor",
+          "parameter_list": [],
           "sequence": 3,
-          "father": [1, 2]
+          "father": [1]
+        },
+        {
+          "name": "PermuteSparseTensor",
+          "parameter_list": [],
+          "sequence": 4,
+          "father": [2]
         },
         {
           "name": "DumpSparseTensor",
-          "parameter_list": ["/data/cwm/pytools/re.tns"],
-          "sequence": 4,
+          "parameter_list": ["/data/cwm/res1.tns"],
+          "sequence": 5,
           "father": [3]
+        },
+        {
+          "name": "DumpSparseTensor",
+          "parameter_list": ["/data/cwm/res2.tns"],
+          "sequence": 6,
+          "father": [4]
         },
         {
           "name": "FreeSparseTensor",
           "parameter_list": [],
-          "sequence": 5,
-          "father": [4]
+          "sequence": 7,
+          "father": [5, 6]
         }
       ]
     )"; 
     
-    ProcessorTArm processor(cwm_json);
+    ProcessorTArm processor(cwm_json, true);
     processor.process();
     return 0;
 }

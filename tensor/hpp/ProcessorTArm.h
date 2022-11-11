@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <set>
 #include <memory>
+#include <pthread.h>
 #include "json11.hpp"
 #include "BaseClassTArm.h"
 
@@ -17,9 +18,14 @@ using namespace json11;
  * */
 class ProcessorTArm {
 public:
+
+    enum STATE {
+        STATIC, RUNNING, END
+    };
+
     ProcessorTArm();
 
-    ProcessorTArm(const string& _str);
+    ProcessorTArm(const string& _str, const bool _multi_thread);
 
     /**
      * @brief
@@ -56,7 +62,7 @@ public:
     void* GetInstance(const string& class_name);
 
     /**
-     * @brief 判断改算子是否已经可以执行
+     * @brief 判断该算子是否已经可以执行
      * @param sequence 算子序号
      * */
     bool JudgeExecution(int sequence);
@@ -70,11 +76,17 @@ public:
     ~ProcessorTArm();
 
 private:
+    void AgentExecute(int sequence);
+
+public:
+    unordered_map<int, STATE> sequence_state;           // [算子序号, 执行状态]
+
+private:
+    bool multi_thread;                                  // 多线程执行
     string str;                                         // 描述 DAG 图的 json
     string json_error;                                  // 描述解析出错的原因
     Json json;                                          // json 解析器
-    set<int> visited;                                   // 已遍历过的算子
-    priority_queue<int> pending;                        // 待执行队列
+    queue<int> pending;                                 // 待执行队列
     unordered_map<int, string> sequence_name;           // [算子序号, 算子名称]
     unordered_map<int, vector<int>> sequence_father;    // 算子的父节点列表
     unordered_map<int, vector<void*>> sequence_params;  // 参数列表
