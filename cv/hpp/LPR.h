@@ -16,7 +16,7 @@ using namespace std;
  * */
 class LPR : public BaseClass {
 public:
-    LPR() : BaseClass("LPR"), src_path("/home/cwm/Graduation/cv/photos_lpr"), dst_path("/home/cwm/Graduation/cv/photos_lpr_result") {}
+    LPR() : BaseClass("LPR"), src_path("/data/cwm/cv/photos_lpr"), dst_path("/data/cwm/cv/photos_lpr_result") {}
 
     void InitParams(vector<void*> params) override;
 

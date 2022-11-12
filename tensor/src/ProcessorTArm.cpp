@@ -16,34 +16,21 @@ ProcessorTArm::ProcessorTArm(const string& _str, const bool _multi_thread) : str
 
 void ProcessorTArm::Init() {
     // 设置所有算子状态为 STATIC、将所有算子添加进待执行队列中
-    const int calculate_count = json.array_items().size();  // 算子总数
+    const int calculate_count = json.array_items().size();
     for (int i = 0; i < calculate_count; ++i) {
         int sequence = json[i]["sequence"].int_value();
         sequence_state[sequence] = STATE::STATIC;
         pending.push(sequence);
     }
-    cout << "输出队列元素：";
-    queue<int> tmp = pending;
-    while (!tmp.empty()) {
-        cout << tmp.front();
-        tmp.pop();
-        cout << " ";
-    }
-    cout << endl;
-    cout << "输出每个节点的状态：";
-    for (auto p : sequence_state) {
-        cout << p.first << " " << p.second << endl;
-    }
-    cout << "~~~~~~" << endl;
     parse_father();
     parse_params();
 }
 
 void ProcessorTArm::parse_father() {
-    const int calculate_count = json.array_items().size();  // 算子总数
+    const int calculate_count = json.array_items().size();
     for (int i = 0; i < calculate_count; ++i) {
-        int sequence = json[i]["sequence"].int_value(); // 算子序号
-        string name = json[i]["name"].string_value();   // 算子名称
+        int sequence = json[i]["sequence"].int_value();
+        string name = json[i]["name"].string_value();
         sequence_name[sequence] = name;
 
         vector<Json> fathers = json[i]["father"].array_items();
@@ -54,9 +41,9 @@ void ProcessorTArm::parse_father() {
 }
 
 void ProcessorTArm::parse_params() {
-    const int calculate_count = json.array_items().size();  // 算子总数
+    const int calculate_count = json.array_items().size();
     for (int i = 0; i < calculate_count; ++i) {
-        int sequence = json[i]["sequence"].int_value(); // 算子序号
+        int sequence = json[i]["sequence"].int_value();
         vector<Json> params = json[i]["parameter_list"].array_items();
         // 遍历参数列表
         for (Json param : params) {
@@ -111,6 +98,17 @@ void ProcessorTArm::process() {
         AgentExecute(sequence);
         if (sequence_state[sequence] == STATE::STATIC) {
             pending.push(sequence);
+        }
+    }
+    // 防止主线程先退出，子线程还没运行完成的情况
+    int completed = 0;
+    int calculate_count = json.array_items().size();
+    while (completed < calculate_count) {
+        completed = 0;
+        for (auto p : sequence_state) {
+            if (p.second == STATE::END) {
+                ++completed;
+            }
         }
     }
 }
@@ -221,14 +219,6 @@ void* threadfunc(void* param) {
     Package* package = reinterpret_cast<Package*>(param);
     int sequence = package -> sequence;
     ProcessorTArm* process = package -> process;
-    if (sequence == 7) {
-        cout << "11111111111" << endl;
-        cout << process -> sequence_state.size() << endl;
-        for (auto p : process -> sequence_state) {
-            cout << p.first << " " << p.second << endl;
-        }
-        cout << "2222222222" << endl;
-    }
     bool result = process -> ExecuteModule(sequence);
     bool* result_pt = new bool(result);
     // 设置该算子状态为已完成

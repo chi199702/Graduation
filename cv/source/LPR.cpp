@@ -5,7 +5,6 @@ void LPR::InitParams(vector<void*> params) {}
 vector<vector<Mat>>& LPR::Execute() {
     // 1、将 Mat 写出到 src_path
     vector<vector<Mat>>& _raw_images = get_raw_images();
-    cout << "LPR 写出到 " << src_path << " 的图片数量：" << _raw_images[0].size() << endl;
     for (vector<Mat>& images : _raw_images) {
         WriteMat(images);
     }
@@ -21,7 +20,6 @@ vector<vector<Mat>>& LPR::Execute() {
     ReaderImages reader;
     vector<Mat>& images = get_result_image();
     images = reader.read(dst_path);
-    cout << "LPR 处理图片数量：" << images.size() << endl;
     PushBack(images);
     cout << "LPR::Execute() has execute success~" << endl;
     return get_result_image_s();

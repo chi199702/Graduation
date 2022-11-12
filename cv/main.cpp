@@ -59,7 +59,7 @@ int main() {
       [
         {
           "name": "Reader",
-          "parameter_list": ["/home/cwm/Graduation/cv/photos_raw"],
+          "parameter_list": ["/data/cwm/cv/photos_raw"],
           "sequence": 1,
           "father": []
         },
@@ -83,7 +83,7 @@ int main() {
         },
         {
           "name": "Watermark",
-          "parameter_list": ["/home/cwm/Graduation/cv/watermark.jpg"],
+          "parameter_list": ["/data/cwm/cv/watermark.jpg"],
           "sequence": 5,
           "father": [2, 3, 4]
         },
@@ -95,7 +95,7 @@ int main() {
         },
         {
           "name": "Writer",
-          "parameter_list": ["/home/cwm/Graduation/cv/photos_writer"],
+          "parameter_list": ["/data/cwm/cv/photos_writer"],
           "sequence": 7,
           "father": [6]
         }

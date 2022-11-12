@@ -70,13 +70,13 @@ int main() {
       [
         {
           "name": "LoadSparseTensor",
-          "parameter_list": ["/data/cwm/spatns10000.tns"],
+          "parameter_list": ["/data/cwm/tensor/spatns10000.tns"],
           "sequence": 1,
           "father": []
         },
         {
           "name": "LoadSparseTensor",
-          "parameter_list": ["/data/cwm/spatns10000.tns"],
+          "parameter_list": ["/data/cwm/tensor/spatns10000.tns"],
           "sequence": 2,
           "father": []
         },
@@ -94,13 +94,13 @@ int main() {
         },
         {
           "name": "DumpSparseTensor",
-          "parameter_list": ["/data/cwm/res1.tns"],
+          "parameter_list": ["/data/cwm/tensor/res1.tns"],
           "sequence": 5,
           "father": [3]
         },
         {
           "name": "DumpSparseTensor",
-          "parameter_list": ["/data/cwm/res2.tns"],
+          "parameter_list": ["/data/cwm/tensor/res2.tns"],
           "sequence": 6,
           "father": [4]
         },
