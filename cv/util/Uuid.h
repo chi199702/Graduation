@@ -8,6 +8,8 @@
 #include <functional>
 #include <random>
 
+using namespace std;
+
 class Uuid {
 public:
     Uuid() {}

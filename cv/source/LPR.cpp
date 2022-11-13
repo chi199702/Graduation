@@ -3,12 +3,29 @@
 void LPR::InitParams(vector<void*> params) {}
 
 vector<vector<Mat>>& LPR::Execute() {
+    cout << "LPR~ start" << endl;
+    {
+        // 创建车牌识别源文件夹
+        Uuid creator;
+        src_path += creator.create_uuid();
+        string create_src_dir = "mkdir " + src_path;
+        ExecuteShell(create_src_dir);
+    }
+    
     // 1、将 Mat 写出到 src_path
     vector<vector<Mat>>& _raw_images = get_raw_images();
     for (vector<Mat>& images : _raw_images) {
         WriteMat(images);
     }
 
+    {
+        // 创建车牌识别目标文件夹
+        Uuid creator;
+        dst_path += creator.create_uuid();
+        string create_dst_dir = "mkdir " + dst_path;
+        ExecuteShell(create_dst_dir);
+    }
+    
     // 2、开启一个子线程来执行 test.py
     // string cmd = "cd /home/cwm/Graduation/cv/pythonmicroserver-update_weights && python test.py";
     string first_cmd = "cd /home/cwm/Graduation/cv/pythonmicroserver-update_weights";
@@ -21,7 +38,7 @@ vector<vector<Mat>>& LPR::Execute() {
     vector<Mat>& images = get_result_image();
     images = reader.read(dst_path);
     PushBack(images);
-    cout << "LPR::Execute() has execute success~" << endl;
+    cout << "LPR~ end" << endl;
     return get_result_image_s();
 }
 

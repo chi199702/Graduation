@@ -1,5 +1,8 @@
 #include <pthread.h>
 #include <iostream>
+#include <time.h>
+#include <stdio.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -56,9 +59,10 @@ void* threadfunc(void* param) {
 }
 
 int main() {
-    cout << "主线程开始执行~" << endl;
-    ProcessorTArm process("池伟鸣", 18);
-    process.process();
-    cout << "主线程执行完毕~" << endl;
+    time_t first, second;
+    first = time(NULL);
+    sleep(2);
+    second = time(NULL);
+    cout << difftime(second, first) << endl;
     return 0;
 }

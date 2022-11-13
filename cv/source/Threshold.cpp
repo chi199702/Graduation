@@ -3,6 +3,7 @@
 void Threshold::InitParams(vector<void*> params) {}
 
 vector<vector<Mat>>& Threshold::Execute() {
+    cout << "Threshold~ start" << endl;
     vector<vector<Mat>>& raw_images = get_raw_images();
     vector<Mat>& result_image = get_result_image();
     for (vector<Mat>& vec_images : raw_images) {
@@ -12,7 +13,7 @@ vector<vector<Mat>>& Threshold::Execute() {
     }
 
     PushBack(result_image);
-    cout << "Threshold::Execute() has execute success~" << endl;
+    cout << "Threshold~ end" << endl;
     return get_result_image_s();
 }
 

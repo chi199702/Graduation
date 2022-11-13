@@ -6,14 +6,14 @@ void Writer::InitParams(vector<void*> params) {
 }
 
 vector<vector<Mat>>& Writer::Execute() {
+    cout << "Writer~ start" << endl;
     WriterImages writer;
     vector<vector<Mat>>& raw_images = get_raw_images();
     vector<Mat>& result_image = get_result_image();
     for (vector<Mat>& vec_images : raw_images) {
         writer.WriterMat(vec_images, dst_path);
     }
-    cout << "Writer 写出的图片数量" << raw_images.size() << endl;
     PushBack(result_image);
-    cout << "Writer::Execute() has execute success~" << endl;
+    cout << "Writer~ end" << endl;
     return get_result_image_s();
 }

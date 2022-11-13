@@ -13,6 +13,7 @@ void Cut::InitParams(vector<void*> params) {
 }
 
 vector<vector<Mat>>& Cut::Execute() {
+    cout << "Cut~ start" << endl;
     vector<vector<Mat>>& raw_images = get_raw_images();
     vector<Mat>& result_image = get_result_image();
     for (vector<Mat>& vec_images : raw_images) {
@@ -20,9 +21,8 @@ vector<vector<Mat>>& Cut::Execute() {
             result_image.push_back(Trim(image));
         }
     }
-    cout << "Cut 处理图片数量：" << result_image.size() << endl;
     PushBack(result_image);
-    cout << "Cut::Execute() has execute success~" << endl; 
+    cout << "Cut~ end" << endl;
     return get_result_image_s();
 }
 

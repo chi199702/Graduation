@@ -6,6 +6,7 @@ void Watermark::InitParams(vector<void*> params) {
 }
 
 vector<vector<Mat>>& Watermark::Execute() {
+    cout << "Watermark~ start" << endl;
     Mat logo = imread(path);
 
     vector<vector<Mat>>& raw_images = get_raw_images();
@@ -20,9 +21,8 @@ vector<vector<Mat>>& Watermark::Execute() {
             result_image.push_back(result);
         }
     }
-    cout << "Watermark 处理图片数量：" << result_image.size() << endl;
     PushBack(result_image);
-    cout << "Watermark::Execute() has execute success~" << endl;
+    cout << "Watermark~ end" << endl;
     return get_result_image_s();
 }
 

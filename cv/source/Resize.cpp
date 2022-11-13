@@ -6,6 +6,7 @@ void Resize::InitParams(vector<void*> params) {
 }
 
 vector<vector<Mat>>& Resize::Execute() {
+    cout << "Resize~ start" << endl;
     vector<vector<Mat>>& raw_images = get_raw_images();
     vector<Mat>& images = get_result_image();
     for (vector<Mat>& vec_images : raw_images) {
@@ -13,9 +14,8 @@ vector<vector<Mat>>& Resize::Execute() {
             images.push_back(Scale(image));
         }
     }
-    cout << "Resize 处理图片数量：" << images.size() << endl;
     PushBack(images);
-    cout << "Resize::Execute() has execute success~" << endl;
+    cout << "Resize~ end" << endl;
     return get_result_image_s();
 }
 

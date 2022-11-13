@@ -1,19 +1,36 @@
 #include "Processor.h"
 
+class Processor;
+
+struct Package {
+    Package(int _sequence, Processor* _process) : sequence(_sequence), process(_process) {}
+    int sequence;
+    Processor* process;
+};
+
+void* threadfunc(void* param);
+
 Processor::Processor() {}
 
-Processor::Processor(const string& _str) : str(_str), json(Json::parse(str, json_error)) {}
+Processor::Processor(const string& _str, const bool _multi_thread) : str(_str), multi_thread(_multi_thread), json(Json::parse(str, json_error)) {}
 
 void Processor::Init() {
+    // 设置所有算子状态为 STATIC、将所有算子添加进待执行队列中
+    const int calculate_count = json.array_items().size();
+    for (int i = 0; i < calculate_count; ++i) {
+        int sequence = json[i]["sequence"].int_value();
+        sequence_state[sequence] = STATE::STATIC;
+        pending.push(sequence);
+    }
     parse_father();
     parse_params();
 }
 
 void Processor::parse_father() {
-    const int calculate_count = json.array_items().size();  // 算子总数
+    const int calculate_count = json.array_items().size();
     for (int i = 0; i < calculate_count; ++i) {
-        int sequence = json[i]["sequence"].int_value(); // 算子序号
-        string name = json[i]["name"].string_value();   // 算子名称
+        int sequence = json[i]["sequence"].int_value();
+        string name = json[i]["name"].string_value();
         sequence_name[sequence] = name;
 
         vector<Json> fathers = json[i]["father"].array_items();
@@ -24,9 +41,9 @@ void Processor::parse_father() {
 }
 
 void Processor::parse_params() {
-    const int calculate_count = json.array_items().size();  // 算子总数
+    const int calculate_count = json.array_items().size();
     for (int i = 0; i < calculate_count; ++i) {
-        int sequence = json[i]["sequence"].int_value(); // 算子序号
+        int sequence = json[i]["sequence"].int_value();
         vector<Json> params = json[i]["parameter_list"].array_items();
         // 遍历参数列表
         for (Json param : params) {
@@ -47,45 +64,48 @@ void Processor::parse_params() {
     }
 }
 
+void Processor::AgentExecute(int sequence) {
+    // 判断该算子的父节点是否全部执行完毕
+    if (!JudgeExecution(sequence)) {
+        return;
+    }
+    if (multi_thread) {
+        pthread_t thread;
+        Package* package = new Package(sequence, this);
+        if (pthread_create(&thread, NULL, threadfunc, package) != 0) {
+            cout << "线程创建失败~" << endl;
+            return;
+        }
+        // 当子线程先于父线程执行时,算子状态可能变为 STATE::END
+        if (sequence_state[sequence] == STATE::STATIC) {
+            sequence_state[sequence] = STATE::RUNNING;
+        }
+    }else {
+        if (ExecuteModule(sequence)) {
+            sequence_state[sequence] = STATE::END;
+        }else {
+            cout << "算子执行出错~" << endl;
+        }
+    }
+}
+
 void Processor::process() {
     Init();
-    // 打印 sequence_name、sequence_father、sequence_params
-//    print();
-    const int calculate_count = json.array_items().size();  // 算子总数
-    int completed = 0;   // 已执行完成的算子个数
-
-    while (completed < calculate_count) {
-        // 遍历所有的算子，取出第一个未被遍历过的算子
-        int no_visited = -1;
-        for (int i = 0; i < calculate_count; ++i) {
-            int sequence = json[i]["sequence"].int_value(); // 算子序号
-            auto ite = visited.find(sequence);
-            if (ite == visited.end()) {                     // 该算子未被遍历过
-                no_visited = sequence;
-                visited.insert(sequence);
-                break;
-            }
+    while (!pending.empty()) {
+        int sequence = pending.front();
+        pending.pop();
+        AgentExecute(sequence);
+        if (sequence_state[sequence] == STATE::STATIC) {
+            pending.push(sequence);
         }
-
-        if (no_visited == -1) {     // 所有算子都已经遍历过了
-            if (pending.empty()) {  // 所有算子都已经执行完毕
-                break;
-            }else {
-                int sequence = pending.top();                    // 取出优先队列中的一个算子
-                pending.pop();
-                bool execute_result = ExecuteModule(sequence);   // 执行该算子
-                if (!execute_result) {                           // 执行失败，存入优先队列
-                    pending.push(sequence);
-                }else {
-                    ++completed;
-                }
-            }
-        }else { // 执行该算子
-            int sequence = no_visited;
-            bool execute_result = ExecuteModule(sequence);   // 执行该算子
-            if (!execute_result) {                           // 执行失败，存入优先队列
-                pending.push(sequence);
-            }else {
+    }
+    // 防止主线程先退出，子线程还没运行完成的情况
+    int completed = 0;
+    int calculate_count = json.array_items().size();
+    while (completed < calculate_count) {
+        completed = 0;
+        for (auto p : sequence_state) {
+            if (p.second == STATE::END) {
                 ++completed;
             }
         }
@@ -93,10 +113,6 @@ void Processor::process() {
 }
 
 bool Processor::ExecuteModule(int sequence) {
-    // 判断该算子是否可以执行
-    if (!JudgeExecution(sequence)) {
-        return false;
-    }
     try {
         string& name = sequence_name[sequence];
         BaseClass* instance = reinterpret_cast<BaseClass*>(GetInstance(name));
@@ -112,7 +128,7 @@ bool Processor::ExecuteModule(int sequence) {
                 fathers_result.push_back(images);
             }
         }
-        instance -> set_raw_images(fathers_result); // 传递父节点的执行结果给算子
+        instance -> set_raw_images(fathers_result);
         // 执行算子
         vector<vector<Mat>>& result_image_s = instance -> Execute();
         // 存放算子执行结果
@@ -139,7 +155,7 @@ bool Processor::JudgeExecution(int sequence) {
     }
 
     for (const int father : fathers) {
-        if (visited.find(father) == visited.end()) {
+        if (sequence_state[father] != STATE::END) {
             return false;
         }
     }
@@ -160,6 +176,21 @@ void Processor::print() {
         }
         cout << " " << "]" << endl;
     }
+}
+
+void* threadfunc(void* param) {
+    Package* package = reinterpret_cast<Package*>(param);
+    int sequence = package -> sequence;
+    Processor* process = package -> process;
+    bool result = process -> ExecuteModule(sequence);
+    bool* result_pt = new bool(result);
+    // 设置该算子状态为已完成
+    if (*result_pt) {
+        process -> sequence_state[sequence] = Processor::STATE::END;
+    }else {
+        cout << "算子执行出错~" << endl;
+    }
+    return result_pt;
 }
 
 Processor::~Processor() {

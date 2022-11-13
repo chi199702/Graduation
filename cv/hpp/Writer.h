@@ -10,7 +10,7 @@ using namespace std;
 
 class Writer : public BaseClass {
 public:
-    Writer() : BaseClass("Writer"), dst_path("/data/cwm/cv/photos_writer") {}
+    Writer() : BaseClass("Writer"), dst_path("/data/cwm/cv/results") {}
 
     void InitParams(vector<void*> params) override;
 
