@@ -61,7 +61,7 @@ public:
     void* GetInstance(const string& class_name);
 
     /**
-     * @brief 判断改算子是否已经可以执行
+     * @brief 判断该算子是否已经可以执行
      * @param sequence 算子序号
      * */
     bool JudgeExecution(int sequence);

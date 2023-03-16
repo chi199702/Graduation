@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <time.h>
 #include "ProcessorTArm.h"
 
 #ifdef __cplusplus
@@ -113,8 +114,11 @@ int main() {
       ]
     )"; 
     
+    time_t start = time(NULL);
     ProcessorTArm processor(cwm_json, true);
     processor.process();
+    time_t end = time(NULL);
+    cout << "运行时间: " << difftime(end, start) << " s" << endl;
     return 0;
 }
 

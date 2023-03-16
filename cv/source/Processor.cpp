@@ -76,7 +76,7 @@ void Processor::AgentExecute(int sequence) {
             cout << "线程创建失败~" << endl;
             return;
         }
-        // 当子线程先于父线程执行时,算子状态可能变为 STATE::END
+        // 当执行到这里的时候，子线程可能已经执行完成了，状态已经完成 STATE::END 了，所以需要先进行状态的判断
         if (sequence_state[sequence] == STATE::STATIC) {
             sequence_state[sequence] = STATE::RUNNING;
         }

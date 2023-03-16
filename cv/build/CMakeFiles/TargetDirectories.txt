@@ -1,0 +1,3 @@
+/home/cwm/Graduation/cv/build/CMakeFiles/cv_server.dir
+/home/cwm/Graduation/cv/build/CMakeFiles/edit_cache.dir
+/home/cwm/Graduation/cv/build/CMakeFiles/rebuild_cache.dir
